@@ -909,6 +909,22 @@
     }
     .nav-drawer ul li a:hover { color: var(--muted); }
 
+    /* ─── TOAST ──────────────────────────────────────────── */
+    .pg-toast {
+      position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%) translateY(12px);
+      background: #1a1a1a; color: #fff;
+      font-size: 13px; font-weight: 500; font-family: 'Geist', sans-serif;
+      padding: 10px 16px; border-radius: 100px;
+      display: flex; align-items: center; gap: 8px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.18);
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.2s ease, transform 0.2s ease;
+      z-index: 9999; white-space: nowrap;
+    }
+    .pg-toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+    .pg-toast.error { background: #c0392b; }
+    .pg-toast-icon { width: 14px; height: 14px; flex-shrink: 0; }
+
     /* ─── PAGE GRID LINES ───────────────────────────────── */
     .page-grid {
       position: fixed; top: 0; left: 50%; transform: translateX(-50%);
@@ -1680,6 +1696,22 @@
     };
   }
 
+  let toastTimer;
+  function showToast(message, type = 'success') {
+    const toast = document.getElementById('pg-toast');
+    if (!toast) return;
+    const icon = type === 'success'
+      ? `<svg class="pg-toast-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 8l4 4 7-7"/></svg>`
+      : `<svg class="pg-toast-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 5v4m0 2.5v.5"/><circle cx="8" cy="8" r="6.5"/></svg>`;
+    toast.innerHTML = icon + message;
+    toast.className = 'pg-toast' + (type === 'error' ? ' error' : '');
+    clearTimeout(toastTimer);
+    requestAnimationFrame(() => {
+      toast.classList.add('show');
+      toastTimer = setTimeout(() => toast.classList.remove('show'), 3000);
+    });
+  }
+
   function setButtonFeedback(button, text) {
     if (!button) return;
     const original = button.textContent;
@@ -1757,17 +1789,23 @@
   }
 
   function downloadPersonPdf(button) {
-    const data = personExportData();
-    const blob = new Blob([buildPersonPdf(data)], { type: 'application/pdf' });
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = `${data.name.toLowerCase().replace(/[^a-z0-9]+/g, '-')}-sample.pdf`;
-    document.body.appendChild(link);
-    link.click();
-    link.remove();
-    setTimeout(() => URL.revokeObjectURL(url), 2000);
-    setButtonFeedback(button, 'Downloaded');
+    try {
+      const data = personExportData();
+      const blob = new Blob([buildPersonPdf(data)], { type: 'application/pdf' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `${data.name.toLowerCase().replace(/[^a-z0-9]+/g, '-')}-sample.pdf`;
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      setTimeout(() => URL.revokeObjectURL(url), 2000);
+      showToast('PDF downloaded successfully');
+      setButtonFeedback(button, 'Downloaded');
+    } catch (err) {
+      showToast('Download failed — please try again', 'error');
+      setButtonFeedback(button, 'Error');
+    }
   }
 
   document.querySelectorAll('[data-pg-cycle]').forEach(chip => {
@@ -1842,5 +1880,6 @@
   });
 </script>
 
+<div class="pg-toast" id="pg-toast" role="status" aria-live="polite"></div>
 </body>
 </html>
