@@ -1740,68 +1740,160 @@
     }
   }
 
-  function pdfEscape(value) {
-    return String(value).replace(/[^\x20-\x7E]/g, '-').replace(/[\\()]/g, '\\$&');
-  }
+  function downloadPersonPdf_print(data) {
+    const row = (label, value) => `
+      <tr>
+        <td class="label">${label}</td>
+        <td class="value">${value}</td>
+      </tr>`;
 
-  function buildPersonPdf(data) {
-    const lines = [
-      'Contentify Synthetic Person',
-      'SAMPLE - fake data for design/testing only',
-      '',
-      `Name: ${data.name}`,
-      `Gender: ${data.gender}`,
-      `Market: ${data.market}`,
-      `Occupation: ${data.occupation}`,
-      `Address: ${data.address}`,
-      '',
-      'Identity',
-      ...Object.entries(data.identity).map(([key, value]) => `${key}: ${value}`),
-      '',
-      'Contact',
-      ...Object.entries(data.contact).map(([key, value]) => `${key}: ${value}`),
-      '',
-      'Finance',
-      ...Object.entries(data.finance).map(([key, value]) => `${key}: ${value}`)
-    ];
-    const text = lines.map((line, index) => `1 0 0 1 48 ${760 - index * 18} Tm (${pdfEscape(line)}) Tj`).join('\n');
-    const stream = `BT\n/F1 11 Tf\n${text}\nET`;
-    const objects = [
-      '1 0 obj\n<< /Type /Catalog /Pages 2 0 R >>\nendobj\n',
-      '2 0 obj\n<< /Type /Pages /Kids [3 0 R] /Count 1 >>\nendobj\n',
-      '3 0 obj\n<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 5 0 R >> >> /Contents 4 0 R >>\nendobj\n',
-      `4 0 obj\n<< /Length ${stream.length} >>\nstream\n${stream}\nendstream\nendobj\n`,
-      '5 0 obj\n<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>\nendobj\n'
-    ];
-    let pdf = '%PDF-1.4\n';
-    const offsets = [0];
-    objects.forEach((object) => {
-      offsets.push(pdf.length);
-      pdf += object;
-    });
-    const xrefAt = pdf.length;
-    pdf += `xref\n0 ${objects.length + 1}\n0000000000 65535 f \n`;
-    offsets.slice(1).forEach(offset => {
-      pdf += `${String(offset).padStart(10, '0')} 00000 n \n`;
-    });
-    pdf += `trailer\n<< /Size ${objects.length + 1} /Root 1 0 R >>\nstartxref\n${xrefAt}\n%%EOF`;
-    return pdf;
+    const html = `<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>${data.name} — Contentify</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600;700&family=Geist:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Geist', sans-serif;
+      font-size: 13px;
+      color: #0a0a0a;
+      background: #fff;
+      padding: 48px;
+      max-width: 680px;
+      margin: 0 auto;
+    }
+    .header {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 40px;
+      padding-bottom: 24px;
+      border-bottom: 1px solid #e5e5e5;
+    }
+    .logo {
+      width: 40px; height: 40px;
+      background: #0a0a0a;
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .logo svg { width: 22px; height: 22px; }
+    .header-title {
+      font-family: 'Geist Mono', monospace;
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: #0a0a0a;
+    }
+    .profile {
+      display: flex;
+      gap: 24px;
+      margin-bottom: 36px;
+    }
+    .avatar {
+      width: 110px; height: 110px;
+      background: #f0f0f0;
+      border-radius: 10px;
+      flex-shrink: 0;
+    }
+    .profile-info { display: flex; flex-direction: column; gap: 5px; justify-content: center; }
+    .profile-info .row { display: flex; gap: 6px; }
+    .profile-info .lbl { color: #737373; font-size: 13px; }
+    .profile-info .val { font-weight: 500; font-size: 13px; }
+    .section { margin-bottom: 28px; }
+    .section-title {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #a3a3a3;
+      margin-bottom: 10px;
+    }
+    table { width: 100%; border-collapse: collapse; }
+    tr { border-bottom: 1px solid #f5f5f5; }
+    tr:last-child { border-bottom: none; }
+    td { padding: 7px 0; font-size: 13px; vertical-align: top; }
+    td.label { color: #737373; width: 140px; }
+    td.value { font-weight: 500; color: #0a0a0a; }
+    .footer {
+      margin-top: 48px;
+      padding-top: 16px;
+      border-top: 1px solid #e5e5e5;
+      font-size: 11px;
+      color: #a3a3a3;
+      font-family: 'Geist Mono', monospace;
+    }
+    @media print {
+      body { padding: 32px; }
+      @page { margin: 0; size: A4; }
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <div class="logo">
+      <svg viewBox="0 0 24 24" fill="white"><text x="4" y="18" font-size="16" font-weight="700" font-family="Arial">C</text></svg>
+    </div>
+    <span class="header-title">Contentify Person Generator</span>
+  </div>
+
+  <div class="profile">
+    <div class="avatar"></div>
+    <div class="profile-info">
+      <div class="row"><span class="lbl">Name:</span><span class="val">${data.name}</span></div>
+      <div class="row"><span class="lbl">Gender:</span><span class="val">${data.gender}</span></div>
+      <div class="row"><span class="lbl">Market:</span><span class="val">${data.market}</span></div>
+      <div class="row"><span class="lbl">Occupation:</span><span class="val">${data.occupation || '—'}</span></div>
+      <div class="row"><span class="lbl">Address:</span><span class="val" style="max-width:340px;">${data.address}</span></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Identity</div>
+    <table>
+      ${Object.entries(data.identity).map(([k,v]) => row(k,v)).join('')}
+    </table>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Contact</div>
+    <table>
+      ${Object.entries(data.contact).map(([k,v]) => row(k,v)).join('')}
+    </table>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Finance</div>
+    <table>
+      ${Object.entries(data.finance).map(([k,v]) => row(k,v)).join('')}
+    </table>
+  </div>
+
+  <div class="footer">✦ All data is synthetic — not a real person or document. Generated by Contentify.</div>
+</body>
+</html>`;
+    return html;
   }
 
   function downloadPersonPdf(button) {
     try {
       const data = personExportData();
-      const blob = new Blob([buildPersonPdf(data)], { type: 'application/pdf' });
-      const url = URL.createObjectURL(blob);
-      const link = document.createElement('a');
-      link.href = url;
-      link.download = `${data.name.toLowerCase().replace(/[^a-z0-9]+/g, '-')}-sample.pdf`;
-      document.body.appendChild(link);
-      link.click();
-      link.remove();
-      setTimeout(() => URL.revokeObjectURL(url), 2000);
-      showToast('PDF downloaded successfully');
-      setButtonFeedback(button, 'Downloaded');
+      const html = downloadPersonPdf_print(data);
+      const win = window.open('', '_blank');
+      if (!win) { showToast('Allow popups to download PDF', 'error'); return; }
+      win.document.write(html);
+      win.document.close();
+      win.onload = () => {
+        setTimeout(() => {
+          win.focus();
+          win.print();
+          showToast('PDF ready — save as PDF from print dialog');
+          setButtonFeedback(button, 'Downloaded');
+        }, 600);
+      };
     } catch (err) {
       showToast('Download failed — please try again', 'error');
       setButtonFeedback(button, 'Error');
