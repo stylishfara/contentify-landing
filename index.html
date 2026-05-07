@@ -1742,7 +1742,8 @@
 
   function downloadPersonPdf_print(data) {
     const tpl = document.getElementById('pdf-tpl').textContent;
-    const row = (l, v) => '<tr><td class="label">' + l + '</td><td class="value">' + v + '</td></tr>';
+    const fmt = l => l.replace(/([A-Z])/g, ' $1').replace(/^./, c => c.toUpperCase());
+    const row = (l, v) => '<tr><td class="label">' + fmt(l) + '</td><td class="value">' + v + '</td></tr>';
     const base = window.location.href.replace(/[^/]*$/, '');
     return tpl
       .replace('{{BASE}}', base)
