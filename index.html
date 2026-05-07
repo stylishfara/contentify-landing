@@ -70,10 +70,7 @@
     .btn-primary:hover { background: var(--accent-hover); }
     .btn-outline { background: transparent; color: var(--fg); border: 1.5px solid var(--border); }
     .btn-outline:hover { background: var(--surface); border-color: #C8C8C8; }
-    .btn-dark { background: var(--dark); color: var(--dark-fg); }
-    .btn-dark:hover { opacity: 0.82; }
     .btn-lg { height: 40px; font-size: 14px; padding: 0 22px; }
-    .btn-sm { height: 32px; font-size: 13px; padding: 0 16px; }
 
     /* SCROLL REVEAL */
     .reveal {
@@ -149,45 +146,6 @@
       width: min(100%, 480px); height: auto; display: block;
       border-radius: 24px;
     }
-    /* ─── TRUST STRIP ─────────────────────────────────── */
-    .trust-strip {
-      display: none;
-      padding: 28px 0;
-      border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
-      overflow: hidden;
-    }
-    .trust-label {
-      text-align: center; font-size: 16px; font-weight: 500;
-      letter-spacing: 0; text-transform: none;
-      color: var(--fg); margin-bottom: 40px;
-    }
-    .trust-marquee {
-      display: flex; overflow: hidden; user-select: none;
-      mask-image: linear-gradient(to right, transparent 0, black 60px, black calc(100% - 60px), transparent 100%);
-      -webkit-mask-image: linear-gradient(to right, transparent 0, black 60px, black calc(100% - 60px), transparent 100%);
-    }
-    .trust-marquee-track {
-      display: flex; align-items: center; gap: 0;
-      animation: marquee 28s linear infinite;
-      flex-shrink: 0;
-    }
-    .trust-marquee:hover .trust-marquee-track { animation-play-state: paused; }
-    .trust-item {
-      display: inline-flex; align-items: center; gap: 8px;
-      font-size: 15px; font-weight: 500; color: var(--muted);
-      white-space: nowrap; padding: 0 28px;
-    }
-    .trust-item i, .trust-item svg { width: 14px; height: 14px; flex-shrink: 0; color: var(--muted); }
-    .trust-item::after {
-      content: ''; display: block;
-      width: 4px; height: 4px; border-radius: 50%;
-      background: var(--border); flex-shrink: 0;
-    }
-    @keyframes marquee {
-      from { transform: translateX(0); }
-      to { transform: translateX(-50%); }
-    }
-
     /* ─── SECTION SHARED ─────────────────────────────── */
     .section-eyebrow {
       font-size: 14px; font-weight: 600; letter-spacing: 0.12em;
@@ -198,16 +156,6 @@
       font-weight: 600; letter-spacing: -0.04em;
       line-height: 1.0;
     }
-
-    /* ─── FEATURES (content1 — alternating layout, saved) ───
-    .features-intro { padding: 104px 0 28px; text-align: center; background: #F5F5F5; }
-    .features-headline { font-size: 48px; font-weight: 600; letter-spacing: -0.04em; line-height: 1.0; }
-    .feature-section { padding: 24px 0; background: #F5F5F5; }
-    .feature-section-last { padding-bottom: 96px; }
-    .feature-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 72px; align-items: center; background: #FFFFFF; border-radius: 28px; padding: 56px 48px; }
-    .feature-grid.reversed { direction: rtl; }
-    .feature-grid.reversed > * { direction: ltr; }
-    ─────────────────────────────────────────────────────── */
 
     /* ─── FEATURES ───────────────────────────────────── */
     .features-intro {
@@ -276,10 +224,6 @@
       border-radius: 8px;
     }
     .check { width: 5px; height: 5px; border-radius: 50%; background: var(--fg); flex-shrink: 0; margin-top: 6px; }
-    .check svg { display: none; }
-    .feature-list { display: none; }
-    .feature-label { display: none; }
-    .feature-num { display: none; }
 
     /* ─── CATEGORIES ─────────────────────────────────── */
     .categories { padding: var(--section-py) 0; background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); overflow: hidden; }
@@ -690,6 +634,9 @@
     }
     .footer-copy { font-size: 13px; color: var(--dark-muted); }
     .footer-note { font-size: 12px; color: var(--dark-muted); opacity: 0.45; }
+    .footer-social { display: flex; align-items: center; gap: 14px; margin-top: 14px; }
+    .footer-social a { color: var(--dark-muted); display: inline-flex; align-items: center; transition: color 150ms ease; }
+    .footer-social a:hover { color: var(--dark-fg); }
 
     /* ─── RESPONSIVE ─────────────────────────────────── */
 
@@ -714,12 +661,6 @@
       }
       .features-left { border-right: 0; border-bottom: 1px solid var(--border); }
       .features-right { display: none; }
-
-      /* Old feature-grid classes (fallback) */
-      .feature-grid, .feature-grid.reversed { grid-template-columns: 1fr; direction: ltr; gap: 40px; }
-      .feature-grid { padding: 40px; }
-      .feature-bento { grid-template-columns: 1fr; }
-      .features-eyebrow-row { flex-direction: column; align-items: flex-start; gap: 16px; }
 
       /* Categories */
       .categories-grid {
@@ -833,11 +774,7 @@
       /* Touch targets */
       .faq-q { min-height: 44px; }
       .btn { min-height: 44px; height: auto; padding-top: 10px; padding-bottom: 10px; }
-      .btn-sm { min-height: 36px; height: auto; padding-top: 8px; padding-bottom: 8px; }
 
-      /* Misc */
-      .hero-stat { padding: 16px 24px; }
-      .pg-fields { grid-template-columns: 1fr; }
       .features-intro { padding-top: var(--section-py); }
     }
 
@@ -1022,32 +959,6 @@
 </section>
 
 <!-- ─── TRUST STRIP ───────────────────────────────────────── -->
-<div class="trust-strip">
-  <p class="trust-label">Real data for every industry</p>
-  <div class="trust-marquee" aria-hidden="true">
-    <div class="trust-marquee-track">
-      <span class="trust-item"><i data-lucide="landmark"></i>Fintech &amp; Banking</span>
-      <span class="trust-item"><i data-lucide="heart-pulse"></i>Healthcare</span>
-      <span class="trust-item"><i data-lucide="building-2"></i>Government</span>
-      <span class="trust-item"><i data-lucide="shopping-bag"></i>E-commerce</span>
-      <span class="trust-item"><i data-lucide="users"></i>HR &amp; Payroll</span>
-      <span class="trust-item"><i data-lucide="graduation-cap"></i>Education</span>
-      <span class="trust-item"><i data-lucide="radio"></i>Telecom</span>
-      <span class="trust-item"><i data-lucide="truck"></i>Logistics</span>
-      <span class="trust-item"><i data-lucide="home"></i>Real Estate</span>
-      <span class="trust-item"><i data-lucide="landmark"></i>Fintech &amp; Banking</span>
-      <span class="trust-item"><i data-lucide="heart-pulse"></i>Healthcare</span>
-      <span class="trust-item"><i data-lucide="building-2"></i>Government</span>
-      <span class="trust-item"><i data-lucide="shopping-bag"></i>E-commerce</span>
-      <span class="trust-item"><i data-lucide="users"></i>HR &amp; Payroll</span>
-      <span class="trust-item"><i data-lucide="graduation-cap"></i>Education</span>
-      <span class="trust-item"><i data-lucide="radio"></i>Telecom</span>
-      <span class="trust-item"><i data-lucide="truck"></i>Logistics</span>
-      <span class="trust-item"><i data-lucide="home"></i>Real Estate</span>
-    </div>
-  </div>
-</div>
-
 <!-- ─── FEATURES ───────────────────────────────────────────── -->
 <section class="features-intro" id="features">
   <div class="container">
@@ -1478,11 +1389,11 @@
           <span class="footer-logo-text">Contentify</span>
         </a>
         <p class="footer-brand-copy">Real West African content for Figma designers. Built in Ghana, used across Africa.</p>
-        <div style="display:flex;align-items:center;gap:14px;margin-top:14px;">
-          <a href="https://x.com/francis_fara" target="_blank" rel="noopener" aria-label="Francis Fara on X" style="color:var(--dark-muted);display:inline-flex;align-items:center;transition:color 0.15s;" onmouseover="this.style.color='var(--dark-fg)'" onmouseout="this.style.color='var(--dark-muted)'">
+        <div class="footer-social">
+          <a href="https://x.com/francis_fara" target="_blank" rel="noopener" aria-label="Francis Fara on X">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.746l7.73-8.835L1.254 2.25H8.08l4.259 5.63 5.905-5.63Zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
           </a>
-          <a href="mailto:francismensah02@gmail.com" aria-label="Email Francis" style="color:var(--dark-muted);display:inline-flex;align-items:center;transition:color 0.15s;" onmouseover="this.style.color='var(--dark-fg)'" onmouseout="this.style.color='var(--dark-muted)'">
+          <a href="mailto:francismensah02@gmail.com" aria-label="Email Francis">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
           </a>
         </div>
@@ -1716,7 +1627,7 @@
     if (!button) return;
     const original = button.textContent;
     button.textContent = text;
-    window.setTimeout(() => { button.textContent = original; }, 1400);
+    setTimeout(() => { button.textContent = original; }, 1400);
   }
 
   function copyPersonJson(button) {
