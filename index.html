@@ -160,49 +160,48 @@
     /* ─── FEATURES ───────────────────────────────────── */
     .features-intro {
       padding: var(--section-py) 0;
-      background: #0a0a0a;
+      background: var(--bg);
       overflow: hidden;
     }
     .features-layout {
       display: grid; grid-template-columns: 1fr 1fr; gap: 0;
-      border: 1px solid rgba(255,255,255,0.1);
+      border: 1px solid var(--border);
       margin-top: 20px;
       margin-left: -40px; margin-right: -40px;
     }
     .features-left {
-      border-right: 1px solid rgba(255,255,255,0.1);
+      border-right: 1px solid var(--border);
     }
     .features-header {
       padding: 40px 40px 32px;
-      border-bottom: 1px solid rgba(255,255,255,0.1);
+      border-bottom: 1px solid var(--border);
     }
     .features-headline {
       font-size: clamp(24px, 2.5vw, 32px);
       font-weight: 600; letter-spacing: -0.03em; line-height: 1.2;
-      color: #ffffff;
     }
     .feature-row {
       padding: 32px 40px;
-      border-bottom: 1px solid rgba(255,255,255,0.1);
+      border-bottom: 1px solid var(--border);
       cursor: default;
       transition: background 0.2s;
       display: flex; gap: 20px; align-items: flex-start;
     }
     .feature-row:last-child { border-bottom: 0; }
-    .feature-row:hover { background: rgba(255,255,255,0.05); }
-    .feature-row.active { background: rgba(255,255,255,0.05); }
+    .feature-row:hover { background: var(--surface); }
+    .feature-row.active { background: var(--surface); }
     .feature-row-num {
-      font-size: 11px; font-weight: 600; color: rgba(255,255,255,0.35);
+      font-size: 11px; font-weight: 600; color: var(--muted);
       letter-spacing: 0.08em; min-width: 20px; padding-top: 3px;
     }
     .feature-row-content { flex: 1; }
     .feature-title {
       font-size: 17px; font-weight: 600;
       letter-spacing: -0.02em; line-height: 1.3; margin-bottom: 6px;
-      color: #ffffff;
+      color: var(--fg);
     }
     .feature-body {
-      font-size: 14px; color: rgba(255,255,255,0.5); line-height: 1.65;
+      font-size: 14px; color: var(--muted); line-height: 1.65;
     }
     .features-right {
       position: sticky; top: 80px;
@@ -970,7 +969,7 @@
     <!-- Left: text rows -->
     <div class="features-left">
       <div class="features-header">
-        <p class="section-eyebrow" style="margin-bottom:14px;color:rgba(255,255,255,0.4);">What it does</p>
+        <p class="section-eyebrow" style="margin-bottom:14px;">What it does</p>
         <h2 class="features-headline">Everything you need,<br>nothing you don't.</h2>
       </div>
       <div class="feature-row active">
