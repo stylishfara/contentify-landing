@@ -160,59 +160,60 @@
     /* ─── FEATURES ───────────────────────────────────── */
     .features-intro {
       padding: var(--section-py) 0;
-      background: var(--bg);
+      background: #0a0a0a;
       overflow: hidden;
     }
     .features-layout {
       display: grid; grid-template-columns: 1fr 1fr; gap: 0;
-      border: 1px solid var(--border);
+      border: 1px solid rgba(255,255,255,0.1);
       margin-top: 20px;
       margin-left: -40px; margin-right: -40px;
     }
     .features-left {
-      border-right: 1px solid var(--border);
+      border-right: 1px solid rgba(255,255,255,0.1);
     }
     .features-header {
       padding: 40px 40px 32px;
-      border-bottom: 1px solid var(--border);
+      border-bottom: 1px solid rgba(255,255,255,0.1);
     }
     .features-headline {
       font-size: clamp(24px, 2.5vw, 32px);
       font-weight: 600; letter-spacing: -0.03em; line-height: 1.2;
+      color: #ffffff;
     }
     .feature-row {
       padding: 32px 40px;
-      border-bottom: 1px solid var(--border);
+      border-bottom: 1px solid rgba(255,255,255,0.1);
       cursor: default;
       transition: background 0.2s;
       display: flex; gap: 20px; align-items: flex-start;
     }
     .feature-row:last-child { border-bottom: 0; }
-    .feature-row:hover { background: var(--surface); }
-    .feature-row.active { background: var(--surface); }
+    .feature-row:hover { background: rgba(255,255,255,0.05); }
+    .feature-row.active { background: rgba(255,255,255,0.05); }
     .feature-row-num {
-      font-size: 11px; font-weight: 600; color: var(--muted);
+      font-size: 11px; font-weight: 600; color: rgba(255,255,255,0.35);
       letter-spacing: 0.08em; min-width: 20px; padding-top: 3px;
     }
     .feature-row-content { flex: 1; }
     .feature-title {
       font-size: 17px; font-weight: 600;
       letter-spacing: -0.02em; line-height: 1.3; margin-bottom: 6px;
-      color: var(--fg);
+      color: #ffffff;
     }
     .feature-body {
-      font-size: 14px; color: var(--muted); line-height: 1.65;
+      font-size: 14px; color: rgba(255,255,255,0.5); line-height: 1.65;
     }
     .features-right {
       position: sticky; top: 80px;
       align-self: start;
       overflow: hidden;
       background: #0a0a0a;
-      min-height: 480px;
-      display: flex; flex-direction: column; justify-content: center; gap: 12px;
-      padding: 40px 0;
-      mask-image: linear-gradient(to bottom, transparent, black 18%, black 82%, transparent);
-      -webkit-mask-image: linear-gradient(to bottom, transparent, black 18%, black 82%, transparent);
+      min-height: 560px;
+      display: flex; flex-direction: column; justify-content: center; gap: 8px;
+      padding: 32px 0;
+      mask-image: linear-gradient(to bottom, transparent, black 12%, black 88%, transparent);
+      -webkit-mask-image: linear-gradient(to bottom, transparent, black 12%, black 88%, transparent);
     }
     .card-strip { display: flex; overflow: hidden; user-select: none; }
     .card-strip-track {
@@ -221,7 +222,7 @@
       animation: cardScroll var(--dur, 30s) linear infinite;
     }
     .card-strip.reverse .card-strip-track { animation-direction: reverse; }
-    .card-strip-img { height: 108px; width: auto; border-radius: 10px; flex-shrink: 0; display: block; }
+    .card-strip-img { height: 86px; width: auto; border-radius: 8px; flex-shrink: 0; display: block; }
     @keyframes cardScroll {
       from { transform: translateX(0); }
       to { transform: translateX(-50%); }
@@ -969,7 +970,7 @@
     <!-- Left: text rows -->
     <div class="features-left">
       <div class="features-header">
-        <p class="section-eyebrow" style="margin-bottom:14px;">What it does</p>
+        <p class="section-eyebrow" style="margin-bottom:14px;color:rgba(255,255,255,0.4);">What it does</p>
         <h2 class="features-headline">Everything you need,<br>nothing you don't.</h2>
       </div>
       <div class="feature-row active">
@@ -996,64 +997,52 @@
     </div>
     <!-- Right: scrolling cards -->
     <div class="features-right" aria-hidden="true">
-      <div class="card-strip" style="--dur:32s;">
+      <div class="card-strip" style="--dur:60s;">
         <div class="card-strip-track">
-          <img src="./card/Frame 2087327947.png" class="card-strip-img" alt="">
-          <img src="./card/Frame 2087327949.png" class="card-strip-img" alt="">
-          <img src="./card/Frame 2087327951.png" class="card-strip-img" alt="">
-          <img src="./card/Frame 2087327953.png" class="card-strip-img" alt="">
-          <img src="./card/Frame 2087327956.png" class="card-strip-img" alt="">
-          <img src="./card/Frame 2087327957.png" class="card-strip-img" alt="">
-          <img src="./card/Frame 2087327958.png" class="card-strip-img" alt="">
-          <img src="./card/Frame 2087327959.png" class="card-strip-img" alt="">
-          <img src="./card/Frame 2087327947.png" class="card-strip-img" alt="">
-          <img src="./card/Frame 2087327949.png" class="card-strip-img" alt="">
-          <img src="./card/Frame 2087327951.png" class="card-strip-img" alt="">
-          <img src="./card/Frame 2087327953.png" class="card-strip-img" alt="">
-          <img src="./card/Frame 2087327956.png" class="card-strip-img" alt="">
-          <img src="./card/Frame 2087327957.png" class="card-strip-img" alt="">
-          <img src="./card/Frame 2087327958.png" class="card-strip-img" alt="">
-          <img src="./card/Frame 2087327959.png" class="card-strip-img" alt="">
+          <img src="./card/Frame 2087327947.png" class="card-strip-img" alt=""><img src="./card/Frame 2087327949.png" class="card-strip-img" alt=""><img src="./card/Frame 2087327951.png" class="card-strip-img" alt=""><img src="./card/Frame 2087327953.png" class="card-strip-img" alt=""><img src="./card/Frame 2087327956.png" class="card-strip-img" alt=""><img src="./card/Frame 2087327957.png" class="card-strip-img" alt=""><img src="./card/Frame 2087327958.png" class="card-strip-img" alt=""><img src="./card/Frame 2087327959.png" class="card-strip-img" alt="">
+          <img src="./card/Frame 2087327947.png" class="card-strip-img" alt=""><img src="./card/Frame 2087327949.png" class="card-strip-img" alt=""><img src="./card/Frame 2087327951.png" class="card-strip-img" alt=""><img src="./card/Frame 2087327953.png" class="card-strip-img" alt=""><img src="./card/Frame 2087327956.png" class="card-strip-img" alt=""><img src="./card/Frame 2087327957.png" class="card-strip-img" alt=""><img src="./card/Frame 2087327958.png" class="card-strip-img" alt=""><img src="./card/Frame 2087327959.png" class="card-strip-img" alt="">
         </div>
       </div>
-      <div class="card-strip reverse" style="--dur:26s;">
+      <div class="card-strip reverse" style="--dur:50s;">
         <div class="card-strip-track">
-          <img src="./card/Frame 2087327959.png" class="card-strip-img" alt="">
-          <img src="./card/Frame 2087327958.png" class="card-strip-img" alt="">
-          <img src="./card/Frame 2087327957.png" class="card-strip-img" alt="">
-          <img src="./card/Frame 2087327956.png" class="card-strip-img" alt="">
-          <img src="./card/Frame 2087327953.png" class="card-strip-img" alt="">
-          <img src="./card/Frame 2087327951.png" class="card-strip-img" alt="">
-          <img src="./card/Frame 2087327949.png" class="card-strip-img" alt="">
-          <img src="./card/Frame 2087327947.png" class="card-strip-img" alt="">
-          <img src="./card/Frame 2087327959.png" class="card-strip-img" alt="">
-          <img src="./card/Frame 2087327958.png" class="card-strip-img" alt="">
-          <img src="./card/Frame 2087327957.png" class="card-strip-img" alt="">
-          <img src="./card/Frame 2087327956.png" class="card-strip-img" alt="">
-          <img src="./card/Frame 2087327953.png" class="card-strip-img" alt="">
-          <img src="./card/Frame 2087327951.png" class="card-strip-img" alt="">
-          <img src="./card/Frame 2087327949.png" class="card-strip-img" alt="">
-          <img src="./card/Frame 2087327947.png" class="card-strip-img" alt="">
+          <img src="./card/Frame 2087327959.png" class="card-strip-img" alt=""><img src="./card/Frame 2087327958.png" class="card-strip-img" alt=""><img src="./card/Frame 2087327957.png" class="card-strip-img" alt=""><img src="./card/Frame 2087327956.png" class="card-strip-img" alt=""><img src="./card/Frame 2087327953.png" class="card-strip-img" alt=""><img src="./card/Frame 2087327951.png" class="card-strip-img" alt=""><img src="./card/Frame 2087327949.png" class="card-strip-img" alt=""><img src="./card/Frame 2087327947.png" class="card-strip-img" alt="">
+          <img src="./card/Frame 2087327959.png" class="card-strip-img" alt=""><img src="./card/Frame 2087327958.png" class="card-strip-img" alt=""><img src="./card/Frame 2087327957.png" class="card-strip-img" alt=""><img src="./card/Frame 2087327956.png" class="card-strip-img" alt=""><img src="./card/Frame 2087327953.png" class="card-strip-img" alt=""><img src="./card/Frame 2087327951.png" class="card-strip-img" alt=""><img src="./card/Frame 2087327949.png" class="card-strip-img" alt=""><img src="./card/Frame 2087327947.png" class="card-strip-img" alt="">
         </div>
       </div>
-      <div class="card-strip" style="--dur:40s;">
+      <div class="card-strip" style="--dur:70s;">
         <div class="card-strip-track">
-          <img src="./card/Frame 2087327951.png" class="card-strip-img" alt="">
-          <img src="./card/Frame 2087327956.png" class="card-strip-img" alt="">
-          <img src="./card/Frame 2087327947.png" class="card-strip-img" alt="">
-          <img src="./card/Frame 2087327958.png" class="card-strip-img" alt="">
-          <img src="./card/Frame 2087327949.png" class="card-strip-img" alt="">
-          <img src="./card/Frame 2087327957.png" class="card-strip-img" alt="">
-          <img src="./card/Frame 2087327953.png" class="card-strip-img" alt="">
-          <img src="./card/Frame 2087327959.png" class="card-strip-img" alt="">
-          <img src="./card/Frame 2087327951.png" class="card-strip-img" alt="">
-          <img src="./card/Frame 2087327956.png" class="card-strip-img" alt="">
-          <img src="./card/Frame 2087327947.png" class="card-strip-img" alt="">
-          <img src="./card/Frame 2087327958.png" class="card-strip-img" alt="">
-          <img src="./card/Frame 2087327949.png" class="card-strip-img" alt="">
-          <img src="./card/Frame 2087327957.png" class="card-strip-img" alt="">
-          <img src="./card/Frame 2087327953.png" class="card-strip-img" alt="">
-          <img src="./card/Frame 2087327959.png" class="card-strip-img" alt="">
+          <img src="./card/Frame 2087327951.png" class="card-strip-img" alt=""><img src="./card/Frame 2087327956.png" class="card-strip-img" alt=""><img src="./card/Frame 2087327947.png" class="card-strip-img" alt=""><img src="./card/Frame 2087327958.png" class="card-strip-img" alt=""><img src="./card/Frame 2087327949.png" class="card-strip-img" alt=""><img src="./card/Frame 2087327957.png" class="card-strip-img" alt=""><img src="./card/Frame 2087327953.png" class="card-strip-img" alt=""><img src="./card/Frame 2087327959.png" class="card-strip-img" alt="">
+          <img src="./card/Frame 2087327951.png" class="card-strip-img" alt=""><img src="./card/Frame 2087327956.png" class="card-strip-img" alt=""><img src="./card/Frame 2087327947.png" class="card-strip-img" alt=""><img src="./card/Frame 2087327958.png" class="card-strip-img" alt=""><img src="./card/Frame 2087327949.png" class="card-strip-img" alt=""><img src="./card/Frame 2087327957.png" class="card-strip-img" alt=""><img src="./card/Frame 2087327953.png" class="card-strip-img" alt=""><img src="./card/Frame 2087327959.png" class="card-strip-img" alt="">
+        </div>
+      </div>
+      <div class="card-strip reverse" style="--dur:55s;">
+        <div class="card-strip-track">
+          <img src="./card/Frame 2087327953.png" class="card-strip-img" alt=""><img src="./card/Frame 2087327947.png" class="card-strip-img" alt=""><img src="./card/Frame 2087327959.png" class="card-strip-img" alt=""><img src="./card/Frame 2087327949.png" class="card-strip-img" alt=""><img src="./card/Frame 2087327958.png" class="card-strip-img" alt=""><img src="./card/Frame 2087327951.png" class="card-strip-img" alt=""><img src="./card/Frame 2087327957.png" class="card-strip-img" alt=""><img src="./card/Frame 2087327956.png" class="card-strip-img" alt="">
+          <img src="./card/Frame 2087327953.png" class="card-strip-img" alt=""><img src="./card/Frame 2087327947.png" class="card-strip-img" alt=""><img src="./card/Frame 2087327959.png" class="card-strip-img" alt=""><img src="./card/Frame 2087327949.png" class="card-strip-img" alt=""><img src="./card/Frame 2087327958.png" class="card-strip-img" alt=""><img src="./card/Frame 2087327951.png" class="card-strip-img" alt=""><img src="./card/Frame 2087327957.png" class="card-strip-img" alt=""><img src="./card/Frame 2087327956.png" class="card-strip-img" alt="">
+        </div>
+      </div>
+      <div class="card-strip" style="--dur:65s;">
+        <div class="card-strip-track">
+          <img src="./card/Frame 2087327957.png" class="card-strip-img" alt=""><img src="./card/Frame 2087327953.png" class="card-strip-img" alt=""><img src="./card/Frame 2087327949.png" class="card-strip-img" alt=""><img src="./card/Frame 2087327959.png" class="card-strip-img" alt=""><img src="./card/Frame 2087327947.png" class="card-strip-img" alt=""><img src="./card/Frame 2087327956.png" class="card-strip-img" alt=""><img src="./card/Frame 2087327958.png" class="card-strip-img" alt=""><img src="./card/Frame 2087327951.png" class="card-strip-img" alt="">
+          <img src="./card/Frame 2087327957.png" class="card-strip-img" alt=""><img src="./card/Frame 2087327953.png" class="card-strip-img" alt=""><img src="./card/Frame 2087327949.png" class="card-strip-img" alt=""><img src="./card/Frame 2087327959.png" class="card-strip-img" alt=""><img src="./card/Frame 2087327947.png" class="card-strip-img" alt=""><img src="./card/Frame 2087327956.png" class="card-strip-img" alt=""><img src="./card/Frame 2087327958.png" class="card-strip-img" alt=""><img src="./card/Frame 2087327951.png" class="card-strip-img" alt="">
+        </div>
+      </div>
+      <div class="card-strip reverse" style="--dur:75s;">
+        <div class="card-strip-track">
+          <img src="./card/Frame 2087327958.png" class="card-strip-img" alt=""><img src="./card/Frame 2087327951.png" class="card-strip-img" alt=""><img src="./card/Frame 2087327953.png" class="card-strip-img" alt=""><img src="./card/Frame 2087327947.png" class="card-strip-img" alt=""><img src="./card/Frame 2087327957.png" class="card-strip-img" alt=""><img src="./card/Frame 2087327959.png" class="card-strip-img" alt=""><img src="./card/Frame 2087327949.png" class="card-strip-img" alt=""><img src="./card/Frame 2087327956.png" class="card-strip-img" alt="">
+          <img src="./card/Frame 2087327958.png" class="card-strip-img" alt=""><img src="./card/Frame 2087327951.png" class="card-strip-img" alt=""><img src="./card/Frame 2087327953.png" class="card-strip-img" alt=""><img src="./card/Frame 2087327947.png" class="card-strip-img" alt=""><img src="./card/Frame 2087327957.png" class="card-strip-img" alt=""><img src="./card/Frame 2087327959.png" class="card-strip-img" alt=""><img src="./card/Frame 2087327949.png" class="card-strip-img" alt=""><img src="./card/Frame 2087327956.png" class="card-strip-img" alt="">
+        </div>
+      </div>
+      <div class="card-strip" style="--dur:58s;">
+        <div class="card-strip-track">
+          <img src="./card/Frame 2087327949.png" class="card-strip-img" alt=""><img src="./card/Frame 2087327958.png" class="card-strip-img" alt=""><img src="./card/Frame 2087327956.png" class="card-strip-img" alt=""><img src="./card/Frame 2087327951.png" class="card-strip-img" alt=""><img src="./card/Frame 2087327959.png" class="card-strip-img" alt=""><img src="./card/Frame 2087327947.png" class="card-strip-img" alt=""><img src="./card/Frame 2087327953.png" class="card-strip-img" alt=""><img src="./card/Frame 2087327957.png" class="card-strip-img" alt="">
+          <img src="./card/Frame 2087327949.png" class="card-strip-img" alt=""><img src="./card/Frame 2087327958.png" class="card-strip-img" alt=""><img src="./card/Frame 2087327956.png" class="card-strip-img" alt=""><img src="./card/Frame 2087327951.png" class="card-strip-img" alt=""><img src="./card/Frame 2087327959.png" class="card-strip-img" alt=""><img src="./card/Frame 2087327947.png" class="card-strip-img" alt=""><img src="./card/Frame 2087327953.png" class="card-strip-img" alt=""><img src="./card/Frame 2087327957.png" class="card-strip-img" alt="">
+        </div>
+      </div>
+      <div class="card-strip reverse" style="--dur:80s;">
+        <div class="card-strip-track">
+          <img src="./card/Frame 2087327956.png" class="card-strip-img" alt=""><img src="./card/Frame 2087327959.png" class="card-strip-img" alt=""><img src="./card/Frame 2087327947.png" class="card-strip-img" alt=""><img src="./card/Frame 2087327957.png" class="card-strip-img" alt=""><img src="./card/Frame 2087327953.png" class="card-strip-img" alt=""><img src="./card/Frame 2087327949.png" class="card-strip-img" alt=""><img src="./card/Frame 2087327958.png" class="card-strip-img" alt=""><img src="./card/Frame 2087327951.png" class="card-strip-img" alt="">
+          <img src="./card/Frame 2087327956.png" class="card-strip-img" alt=""><img src="./card/Frame 2087327959.png" class="card-strip-img" alt=""><img src="./card/Frame 2087327947.png" class="card-strip-img" alt=""><img src="./card/Frame 2087327957.png" class="card-strip-img" alt=""><img src="./card/Frame 2087327953.png" class="card-strip-img" alt=""><img src="./card/Frame 2087327949.png" class="card-strip-img" alt=""><img src="./card/Frame 2087327958.png" class="card-strip-img" alt=""><img src="./card/Frame 2087327951.png" class="card-strip-img" alt="">
         </div>
       </div>
     </div>
