@@ -1702,14 +1702,17 @@
   }
 
   async function downloadPersonPdf(button) {
+    // Open the window synchronously before any await so mobile browsers
+    // treat it as a direct user gesture and don't block it
+    const win = window.open('', '_blank');
+    if (!win) { showToast('Allow popups to download PDF', 'error'); return; }
     try {
       const data = personExportData();
       if (data.photo) data.photo = await imgToDataURL(data.photo);
       const html = downloadPersonPdf_print(data);
       const blob = new Blob([html], { type: 'text/html; charset=utf-8' });
       const url = URL.createObjectURL(blob);
-      const win = window.open(url, '_blank');
-      if (!win) { showToast('Allow popups to download PDF', 'error'); URL.revokeObjectURL(url); return; }
+      win.location.href = url;
       setTimeout(() => {
         win.focus();
         win.print();
@@ -1718,6 +1721,7 @@
       }, 800);
       setTimeout(() => URL.revokeObjectURL(url), 60000);
     } catch (err) {
+      win.close();
       showToast('Download failed — please try again', 'error');
       setButtonFeedback(button, 'Error');
     }
