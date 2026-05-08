@@ -1508,7 +1508,8 @@
       regions: [['Greater Accra','Accra'],['Ashanti','Kumasi'],['Western','Sekondi-Takoradi'],['Eastern','Koforidua'],['Central','Cape Coast'],['Northern','Tamale'],['Volta','Ho'],['Bono','Sunyani'],['Bono East','Techiman'],['Savannah','Damongo']],
       streets: ['Independence Avenue','Kwame Nkrumah Avenue','Liberation Road','Ring Road','Oxford Street','Cantonments Road','Spintex Road','High Street','Castle Road','Guggisberg Avenue','Nsawam Road','Winneba Road','Labone Street'],
       phones: ['0548710122','0579166978','0288018451','0264893252','0249570154','0270391171','0573834657','0209301031','0241656670','0502624731','0245009788','0200812191','0553462475','0502784980'],
-      emails: ['kwame.gh@icloud.com','kofi_875@hotmail.com','kweku.gh@yahoo.com','kwabena_400@icloud.com','kwasi@protonmail.com','kojo@live.com','selorm_44@outlook.com','abena_698@protonmail.com','akosua_972@yahoo.com','akua.gh@gmail.com','ama_915@hotmail.com','adwoa.gh@icloud.com'],
+      maleEmails: ['kwame.gh@icloud.com','kofi_875@hotmail.com','kweku.gh@yahoo.com','kwabena_400@icloud.com','kwasi@protonmail.com','kojo@live.com','selorm_44@outlook.com','yaw.gh@gmail.com','mawuli@protonmail.com','nii.gh@hotmail.com','ebo_23@yahoo.com','kafui.gh@outlook.com','elikem@live.com','senyo.gh@icloud.com'],
+      femaleEmails: ['abena_698@protonmail.com','akosua_972@yahoo.com','akua.gh@gmail.com','ama_915@hotmail.com','adwoa.gh@icloud.com','esi.gh@outlook.com','efua_77@gmail.com','yaa.gh@icloud.com','serwaa@yahoo.com','maame_gh@hotmail.com','afia.gh@protonmail.com','araba_19@gmail.com','adjoa.gh@live.com'],
       ids: ['GHA-SV1984309794-9','GHA-BO1974360499-2','GHA-AS1976864444-6','GHA-WN2003834515-8','GHA-AS1999613041-3','GHA-TV1999716989-3','GHA-OT1984815515-3','GHA-BE1989792655-2','GHA-NP1965851493-8','GHA-AH1977685055-0'],
       occupations: ['Software Engineer','UI/UX Designer','Data Analyst','IT Support Technician','Network Engineer','Banker','Accountant','Financial Analyst','Nurse','Medical Doctor','Pharmacist','Teacher'],
       gps: ['VR-433-4232','UW-297-2885','BR-587-4896','CR-669-9202','GA-971-5586','GA-955-9145','NR-911-4133','AK-948-7620','ER-690-8556','WR-117-8954'],
@@ -1522,7 +1523,8 @@
       states: [['Lagos','Ikeja'],['FCT Abuja','Abuja'],['Rivers','Port Harcourt'],['Kano','Kano'],['Oyo','Ibadan'],['Enugu','Enugu'],['Kaduna','Kaduna'],['Anambra','Awka']],
       streets: ['Admiralty Way','Allen Avenue','Ahmadu Bello Way','Bourdillon Road','Herbert Macaulay Way','Aminu Kano Crescent','Tafawa Balewa Road','Aba Road','Awolowo Road'],
       phones: ['08039274618','08061847392','07038492015','08160593827','09027461835','08092384716','07019384725','08137492068'],
-      emails: ['chinedu.ng@gmail.com','amina.ng@yahoo.com','tunde@outlook.com','ngozi@mail.com','zainab@icloud.com','femi.ng@hotmail.com','chioma@protonmail.com'],
+      maleEmails: ['chinedu.ng@gmail.com','tunde@outlook.com','femi.ng@hotmail.com','emeka_ng@yahoo.com','nnamdi@protonmail.com','seyi.ng@icloud.com','ayodele@gmail.com','usman.ng@live.com'],
+      femaleEmails: ['amina.ng@yahoo.com','ngozi@mail.com','zainab@icloud.com','chioma@protonmail.com','yetunde.ng@gmail.com','funke_ng@hotmail.com','kemi.ng@outlook.com','adaeze@icloud.com','temitope.ng@yahoo.com'],
       banks: ['First Bank of Nigeria','United Bank for Africa (UBA)','GTBank','Access Bank','Zenith Bank','Fidelity Bank','Union Bank of Nigeria','Stanbic IBTC Bank','FCMB','Ecobank Nigeria'],
       occupations: ['Product Designer','Software Engineer','Civil Servant','Banker','Teacher','Doctor','Data Analyst','Entrepreneur','Accountant','Nurse']
     }
@@ -1566,7 +1568,7 @@
         phone,
         locationLabel: 'GPS Address',
         locationValue: pick(db.gps),
-        email: pick(db.emails),
+        email: pick(personState.gender === 'male' ? db.maleEmails : db.femaleEmails),
         bank: pick(db.banks),
         account: pick(db.accounts),
         momo: phone
@@ -1594,7 +1596,7 @@
       phone,
       locationLabel: 'State',
       locationValue: state[0],
-      email: pick(db.emails),
+      email: pick(personState.gender === 'male' ? db.maleEmails : db.femaleEmails),
       bank: pick(db.banks),
       account: digits(10),
       momo: phone
