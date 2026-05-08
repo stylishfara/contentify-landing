@@ -207,21 +207,24 @@
       position: sticky; top: 80px;
       align-self: start;
       overflow: hidden;
-      background: var(--surface);
+      background: #0a0a0a;
       min-height: 480px;
-      display: flex; align-items: center; justify-content: center;
+      display: flex; flex-direction: column; justify-content: center; gap: 12px;
+      padding: 40px 0;
+      mask-image: linear-gradient(to bottom, transparent, black 18%, black 82%, transparent);
+      -webkit-mask-image: linear-gradient(to bottom, transparent, black 18%, black 82%, transparent);
     }
-    .feature-img {
-      position: absolute; inset: 0;
-      display: flex; align-items: stretch; justify-content: center;
-      opacity: 0; transition: opacity 0.35s ease;
-      padding: 40px;
+    .card-strip { display: flex; overflow: hidden; user-select: none; }
+    .card-strip-track {
+      display: flex; align-items: center; gap: 10px;
+      flex-shrink: 0;
+      animation: cardScroll var(--dur, 30s) linear infinite;
     }
-    .feature-img.active { opacity: 1; }
-    .feature-placeholder {
-      width: 100%; height: 100%;
-      background: #F5F5F5;
-      border-radius: 8px;
+    .card-strip.reverse .card-strip-track { animation-direction: reverse; }
+    .card-strip-img { height: 108px; width: auto; border-radius: 10px; flex-shrink: 0; display: block; }
+    @keyframes cardScroll {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
     }
     .check { width: 5px; height: 5px; border-radius: 50%; background: var(--fg); flex-shrink: 0; margin-top: 6px; }
 
@@ -969,21 +972,21 @@
         <p class="section-eyebrow" style="margin-bottom:14px;">What it does</p>
         <h2 class="features-headline">Everything you need,<br>nothing you don't.</h2>
       </div>
-      <div class="feature-row active" data-feature="1">
+      <div class="feature-row active">
         <span class="feature-row-num">01</span>
         <div class="feature-row-content">
           <h3 class="feature-title">Fill in seconds.</h3>
           <p class="feature-body">Select any text layer, browse the content library, and fill with a single click. No more copy-pasting.</p>
         </div>
       </div>
-      <div class="feature-row" data-feature="2">
+      <div class="feature-row">
         <span class="feature-row-num">02</span>
         <div class="feature-row-content">
           <h3 class="feature-title">Data that feels real.</h3>
           <p class="feature-body">Kwame. Abena. Kofi. Real names for real people — not generic placeholders that break immersion.</p>
         </div>
       </div>
-      <div class="feature-row" data-feature="3">
+      <div class="feature-row">
         <span class="feature-row-num">03</span>
         <div class="feature-row-content">
           <h3 class="feature-title">Two markets, one plugin.</h3>
@@ -991,16 +994,67 @@
         </div>
       </div>
     </div>
-    <!-- Right: image panel -->
-    <div class="features-right">
-      <div class="feature-img active" data-feature="1">
-        <div class="feature-placeholder"></div>
+    <!-- Right: scrolling cards -->
+    <div class="features-right" aria-hidden="true">
+      <div class="card-strip" style="--dur:32s;">
+        <div class="card-strip-track">
+          <img src="./card/Frame 2087327947.png" class="card-strip-img" alt="">
+          <img src="./card/Frame 2087327949.png" class="card-strip-img" alt="">
+          <img src="./card/Frame 2087327951.png" class="card-strip-img" alt="">
+          <img src="./card/Frame 2087327953.png" class="card-strip-img" alt="">
+          <img src="./card/Frame 2087327956.png" class="card-strip-img" alt="">
+          <img src="./card/Frame 2087327957.png" class="card-strip-img" alt="">
+          <img src="./card/Frame 2087327958.png" class="card-strip-img" alt="">
+          <img src="./card/Frame 2087327959.png" class="card-strip-img" alt="">
+          <img src="./card/Frame 2087327947.png" class="card-strip-img" alt="">
+          <img src="./card/Frame 2087327949.png" class="card-strip-img" alt="">
+          <img src="./card/Frame 2087327951.png" class="card-strip-img" alt="">
+          <img src="./card/Frame 2087327953.png" class="card-strip-img" alt="">
+          <img src="./card/Frame 2087327956.png" class="card-strip-img" alt="">
+          <img src="./card/Frame 2087327957.png" class="card-strip-img" alt="">
+          <img src="./card/Frame 2087327958.png" class="card-strip-img" alt="">
+          <img src="./card/Frame 2087327959.png" class="card-strip-img" alt="">
+        </div>
       </div>
-      <div class="feature-img" data-feature="2">
-        <div class="feature-placeholder" style="background:#E0E0E0;"></div>
+      <div class="card-strip reverse" style="--dur:26s;">
+        <div class="card-strip-track">
+          <img src="./card/Frame 2087327959.png" class="card-strip-img" alt="">
+          <img src="./card/Frame 2087327958.png" class="card-strip-img" alt="">
+          <img src="./card/Frame 2087327957.png" class="card-strip-img" alt="">
+          <img src="./card/Frame 2087327956.png" class="card-strip-img" alt="">
+          <img src="./card/Frame 2087327953.png" class="card-strip-img" alt="">
+          <img src="./card/Frame 2087327951.png" class="card-strip-img" alt="">
+          <img src="./card/Frame 2087327949.png" class="card-strip-img" alt="">
+          <img src="./card/Frame 2087327947.png" class="card-strip-img" alt="">
+          <img src="./card/Frame 2087327959.png" class="card-strip-img" alt="">
+          <img src="./card/Frame 2087327958.png" class="card-strip-img" alt="">
+          <img src="./card/Frame 2087327957.png" class="card-strip-img" alt="">
+          <img src="./card/Frame 2087327956.png" class="card-strip-img" alt="">
+          <img src="./card/Frame 2087327953.png" class="card-strip-img" alt="">
+          <img src="./card/Frame 2087327951.png" class="card-strip-img" alt="">
+          <img src="./card/Frame 2087327949.png" class="card-strip-img" alt="">
+          <img src="./card/Frame 2087327947.png" class="card-strip-img" alt="">
+        </div>
       </div>
-      <div class="feature-img" data-feature="3">
-        <div class="feature-placeholder" style="background:#D6D6D6;"></div>
+      <div class="card-strip" style="--dur:40s;">
+        <div class="card-strip-track">
+          <img src="./card/Frame 2087327951.png" class="card-strip-img" alt="">
+          <img src="./card/Frame 2087327956.png" class="card-strip-img" alt="">
+          <img src="./card/Frame 2087327947.png" class="card-strip-img" alt="">
+          <img src="./card/Frame 2087327958.png" class="card-strip-img" alt="">
+          <img src="./card/Frame 2087327949.png" class="card-strip-img" alt="">
+          <img src="./card/Frame 2087327957.png" class="card-strip-img" alt="">
+          <img src="./card/Frame 2087327953.png" class="card-strip-img" alt="">
+          <img src="./card/Frame 2087327959.png" class="card-strip-img" alt="">
+          <img src="./card/Frame 2087327951.png" class="card-strip-img" alt="">
+          <img src="./card/Frame 2087327956.png" class="card-strip-img" alt="">
+          <img src="./card/Frame 2087327947.png" class="card-strip-img" alt="">
+          <img src="./card/Frame 2087327958.png" class="card-strip-img" alt="">
+          <img src="./card/Frame 2087327949.png" class="card-strip-img" alt="">
+          <img src="./card/Frame 2087327957.png" class="card-strip-img" alt="">
+          <img src="./card/Frame 2087327953.png" class="card-strip-img" alt="">
+          <img src="./card/Frame 2087327959.png" class="card-strip-img" alt="">
+        </div>
       </div>
     </div>
   </div>
@@ -1461,18 +1515,6 @@
   // Lucide icons
   lucide.createIcons();
 
-  // Feature hover switcher
-  const featureRows = document.querySelectorAll('.feature-row');
-  const featureImgs = document.querySelectorAll('.feature-img');
-  featureRows.forEach(row => {
-    row.addEventListener('mouseenter', () => {
-      const id = row.dataset.feature;
-      featureRows.forEach(r => r.classList.remove('active'));
-      featureImgs.forEach(img => img.classList.remove('active'));
-      row.classList.add('active');
-      document.querySelector(`.feature-img[data-feature="${id}"]`)?.classList.add('active');
-    });
-  });
 
   // Person generator data is seeded from the local Contentify data workbook/plugin lists.
   const personDatabase = {
