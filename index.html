@@ -1512,6 +1512,12 @@
   const formatGhanaPhone = (phone) => `+233 ${phone.slice(1,3)} ${phone.slice(3,6)} ${phone.slice(6)}`;
   const formatNigeriaPhone = (phone) => `+234 ${phone.slice(1,4)} ${phone.slice(4,7)} ${phone.slice(7)}`;
 
+  const avatarCount = { male: 16, female: 17 };
+  function pickAvatar(gender) {
+    const n = Math.ceil(Math.random() * avatarCount[gender]);
+    return `./avatar/${gender}/${gender}${n}.png`;
+  }
+
   function generatePerson() {
     if (personState.market === 'ghana') {
       const db = personDatabase.ghana;
@@ -1522,6 +1528,7 @@
       return {
         market: 'Ghana',
         gender: personState.gender,
+        photo: pickAvatar(personState.gender),
         name: `${first} ${last}`,
         occupation: pick(db.occupations),
         addressLines: [`House ${Math.ceil(Math.random() * 48)}, ${pick(db.streets)}`, `${region[1]}, ${region[0]}, Ghana`],
@@ -1549,6 +1556,7 @@
     return {
       market: 'Nigeria',
       gender: personState.gender,
+      photo: pickAvatar(personState.gender),
       name: `${first} ${last}`,
       occupation: pick(db.occupations),
       addressLines: [`No. ${Math.ceil(Math.random() * 42)}, ${pick(db.streets)}`, `${state[1]}, ${state[0]}, Nigeria`],
@@ -1571,6 +1579,16 @@
   function updatePersonPreview(person = generatePerson()) {
     if (!personGenerator) return;
     currentPerson = person;
+
+    const avatarEl = personGenerator.querySelector('.pg-avatar');
+    if (avatarEl) {
+      const img = new Image();
+      img.onload = () => { avatarEl.innerHTML = ''; avatarEl.appendChild(img); };
+      img.style.cssText = 'width:100%;height:100%;object-fit:cover;border-radius:13px;display:block;';
+      img.alt = person.name;
+      img.src = person.photo;
+    }
+
     const preview = { ...person, address: person.addressLines.join('<br>') };
     Object.entries(preview).forEach(([key, value]) => {
       const field = personGenerator.querySelector(`[data-pg-field="${key}"]`);
@@ -1584,6 +1602,7 @@
     const person = currentPerson || generatePerson();
     return {
       disclaimer: 'Synthetic sample data. Not a real person or official document.',
+      photo: person.photo,
       name: person.name,
       gender: person.gender,
       market: person.market,
@@ -1658,6 +1677,7 @@
     const base = window.location.href.replace(/[^/]*$/, '');
     return tpl
       .replace('{{BASE}}', base)
+      .replace('{{PHOTO_TAG}}', data.photo ? '<img src="' + data.photo + '" style="width:100%;height:100%;object-fit:cover;display:block;" alt="">' : '')
       .replace('{{NAME}}', data.name)
       .replace('{{TITLE}}', data.name)
       .replace('{{GENDER}}', data.gender)
@@ -1669,9 +1689,22 @@
       .replace('{{FINANCE_ROWS}}', Object.entries(data.finance).map(([k,v]) => row(k,v)).join(''));
   }
 
-  function downloadPersonPdf(button) {
+  async function imgToDataURL(src) {
+    try {
+      const res = await fetch(src);
+      const blob = await res.blob();
+      return await new Promise(resolve => {
+        const r = new FileReader();
+        r.onloadend = () => resolve(r.result);
+        r.readAsDataURL(blob);
+      });
+    } catch { return ''; }
+  }
+
+  async function downloadPersonPdf(button) {
     try {
       const data = personExportData();
+      if (data.photo) data.photo = await imgToDataURL(data.photo);
       const html = downloadPersonPdf_print(data);
       const blob = new Blob([html], { type: 'text/html; charset=utf-8' });
       const url = URL.createObjectURL(blob);
@@ -1817,7 +1850,7 @@
     </div>
     <div class="content">
       <div class="profile">
-        <div class="avatar" style="width:110px;height:110px;background:#e5e5e5;border-radius:10px;flex-shrink:0;overflow:hidden;print-color-adjust:exact;-webkit-print-color-adjust:exact;"></div>
+        <div class="avatar" style="width:110px;height:110px;background:#e5e5e5;border-radius:10px;flex-shrink:0;overflow:hidden;print-color-adjust:exact;-webkit-print-color-adjust:exact;">{{PHOTO_TAG}}</div>
         <div class="profile-info">
           <div class="row"><span class="lbl">Name:</span><span class="val">{{NAME}}</span></div>
           <div class="row"><span class="lbl">Gender:</span><span class="val">{{GENDER}}</span></div>
