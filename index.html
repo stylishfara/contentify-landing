@@ -204,17 +204,27 @@
       font-size: 14px; color: var(--muted); line-height: 1.65;
     }
     .features-right {
-      background: #e5e5e5 url("./pat.svg") center / cover no-repeat;
+      background: #e5e5e5;
+      position: relative;
       display: flex; align-items: center; justify-content: center;
       padding: 32px 24px;
     }
+    .features-right::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: url("./pat.svg") center / cover no-repeat;
+      opacity: 0.6;
+      pointer-events: none;
+    }
     .card-strip-wrap {
-      width: 100%; max-width: 420px;
-      display: flex; flex-direction: column; gap: 18px;
+      position: relative; z-index: 1;
+      width: 420px; height: 420px;
+      flex-shrink: 0;
+      display: flex; flex-direction: column; gap: 18px; justify-content: center;
       overflow: hidden;
       border-radius: 16px;
       background: #171717;
-      padding: 28px 0;
+      padding: 0;
     }
     .card-strip { display: flex; overflow: hidden; user-select: none; }
     .card-strip-track {
