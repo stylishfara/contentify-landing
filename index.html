@@ -458,6 +458,7 @@
       margin-left: auto;
       border-radius: 21px;
       padding: 1px;
+      background: rgba(234,179,8,0.25);
     }
     .pg-card-wrap::before {
       content: '';
@@ -465,13 +466,13 @@
       inset: 0;
       border-radius: 21px;
       background: conic-gradient(from 0deg,
-        rgba(234,179,8,0.2)  0deg,
-        rgba(234,179,8,0.2)  300deg,
-        rgba(234,179,8,1)    330deg,
-        rgba(251,191,36,1)   345deg,
-        rgba(234,179,8,1)    360deg
+        transparent   0deg,
+        transparent   330deg,
+        rgba(234,179,8,0.85) 348deg,
+        rgba(251,191,36,1)   354deg,
+        rgba(234,179,8,0.85) 360deg
       );
-      animation: pgLightSweep 4s linear infinite;
+      animation: pgLightSweep 5s linear infinite;
     }
     @keyframes pgLightSweep {
       to { transform: rotate(360deg); }
