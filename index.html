@@ -463,19 +463,18 @@
     .pg-card-wrap::before {
       content: '';
       position: absolute;
-      inset: 0;
-      border-radius: 21px;
-      background: conic-gradient(from 0deg,
-        transparent   0deg,
-        transparent   330deg,
-        rgba(234,179,8,0.85) 348deg,
-        rgba(251,191,36,1)   354deg,
-        rgba(234,179,8,0.85) 360deg
-      );
-      animation: pgLightSweep 5s linear infinite;
+      width: 80px;
+      height: 6px;
+      background: radial-gradient(ellipse at center, rgba(251,191,36,1) 0%, rgba(234,179,8,0.4) 60%, transparent 100%);
+      filter: blur(3px);
+      border-radius: 50%;
+      offset-path: rect(0px 100% 100% 0px round 21px);
+      offset-distance: 0%;
+      animation: pgLightTravel 4s linear infinite;
+      z-index: 2;
     }
-    @keyframes pgLightSweep {
-      to { transform: rotate(360deg); }
+    @keyframes pgLightTravel {
+      to { offset-distance: 100%; }
     }
     .pg-card {
       position: relative; z-index: 1;
