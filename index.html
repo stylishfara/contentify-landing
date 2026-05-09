@@ -1600,11 +1600,11 @@
   };
 
   const avatarAgeBracket = {
-    male:   { 1:'young', 2:'older', 3:'young', 4:'older', 5:'young', 6:'mid', 7:'mid', 8:'mid', 9:'young', 10:'mid', 11:'mid', 12:'young', 13:'mid', 14:'young', 15:'older', 16:'mid' },
-    female: { 1:'mid', 2:'young', 3:'older', 4:'young', 5:'older', 6:'young', 7:'young', 8:'young', 9:'young', 10:'mid', 11:'young', 12:'young', 13:'mid', 14:'older', 15:'older', 16:'young', 17:'older' }
+    male:   { 1:'young', 2:'older', 3:'young', 4:'older', 5:'young', 6:'mid', 7:'mid', 8:'mid', 9:'young', 10:'mid', 11:'mid', 12:'young', 13:'mid', 14:'young', 15:'older', 16:'mid', 17:'mid', 18:'mid', 19:'young', 20:'young', 21:'young', 22:'young', 23:'young' },
+    female: { 1:'mid', 2:'young', 3:'older', 4:'young', 5:'older', 6:'young', 7:'young', 8:'young', 9:'young', 10:'mid', 11:'young', 12:'young', 13:'mid', 14:'older', 15:'older', 16:'young', 17:'older', 18:'mid', 19:'young', 20:'older', 21:'mid', 22:'young', 23:'young' }
   };
 
-  const avatarCount = { male: 16, female: 17 };
+  const avatarCount = { male: 23, female: 23 };
   function pickAvatarWithDOB(gender) {
     const n = Math.ceil(Math.random() * avatarCount[gender]);
     const src = `./avatar/${gender}/${gender}${n}.png`;
