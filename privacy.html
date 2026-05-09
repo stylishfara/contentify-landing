@@ -30,15 +30,14 @@
       z-index: 100;
     }
     .nav-logo {
-      display: flex; align-items: center; gap: 10px;
-      font-size: 13px; font-weight: 700; letter-spacing: 0.1em;
-      text-transform: uppercase; text-decoration: none; color: #0a0a0a;
+      display: flex; align-items: center; gap: 9px;
+      text-decoration: none; color: #0a0a0a;
     }
-    .nav-logo-mark {
-      width: 28px; height: 28px; background: #0a0a0a; border-radius: 6px;
-      display: flex; align-items: center; justify-content: center;
+    .nav-logo-img {
+      width: 28px; height: 28px; border-radius: 7px;
+      object-fit: cover; flex-shrink: 0;
     }
-    .nav-logo-mark svg { width: 16px; height: 16px; fill: #fff; }
+    .nav-logo-text { font-size: 15px; font-weight: 500; letter-spacing: -0.3px; }
     .nav-back {
       font-size: 13px; color: #737373; text-decoration: none;
       display: flex; align-items: center; gap: 6px;
@@ -56,7 +55,7 @@
     }
     h1 {
       font-size: clamp(32px, 5vw, 48px);
-      font-weight: 700; letter-spacing: -0.03em;
+      font-weight: 600; letter-spacing: -0.03em;
       line-height: 1.1; margin-bottom: 12px;
     }
     .updated {
@@ -83,10 +82,8 @@
 
 <nav>
   <a href="./index.html" class="nav-logo">
-    <div class="nav-logo-mark">
-      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 4h6v6H4V4zm0 10h6v6H4v-6zm10-10h6v6h-6V4zm0 10h6v6h-6v-6z"/></svg>
-    </div>
-    Contentify
+    <img src="./THUMBNAIL.jpg" alt="Contentify" class="nav-logo-img">
+    <span class="nav-logo-text">Contentify</span>
   </a>
   <a href="./index.html" class="nav-back">← Back to home</a>
 </nav>
