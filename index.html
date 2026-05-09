@@ -1610,7 +1610,7 @@
       const { src: avatarSrc, dob: avatarDob } = pickAvatarWithDOB(personState.gender);
       return {
         market: 'Ghana',
-        gender: personState.gender,
+        gender: personState.gender.charAt(0).toUpperCase() + personState.gender.slice(1),
         photo: avatarSrc,
         name: `${first} ${last}`,
         dob: avatarDob,
@@ -1640,7 +1640,7 @@
     const { src: avatarSrc, dob: avatarDob } = pickAvatarWithDOB(personState.gender);
     return {
       market: 'Nigeria',
-      gender: personState.gender,
+      gender: personState.gender.charAt(0).toUpperCase() + personState.gender.slice(1),
       photo: avatarSrc,
       name: `${first} ${last}`,
       dob: avatarDob,
