@@ -1668,7 +1668,7 @@
       phone,
       locationLabel: 'State',
       locationValue: state[0],
-      email: pick(personState.gender === 'male' ? db.maleEmails : db.femaleEmails),
+      email: genEmail(first, last),
       bank: pick(db.banks),
       account: digits(10),
       momo: phone
