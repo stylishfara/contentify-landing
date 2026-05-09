@@ -453,12 +453,32 @@
 
     /* ── Person Generator card ───────────────────────── */
     .pg-card-wrap {
+      position: relative;
       max-width: 500px;
       margin-left: auto;
+      border-radius: 21px;
+      padding: 1px;
+    }
+    .pg-card-wrap::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 21px;
+      background: conic-gradient(from 0deg,
+        rgba(234,179,8,0.2)  0deg,
+        rgba(234,179,8,0.2)  300deg,
+        rgba(234,179,8,1)    330deg,
+        rgba(251,191,36,1)   345deg,
+        rgba(234,179,8,1)    360deg
+      );
+      animation: pgLightSweep 4s linear infinite;
+    }
+    @keyframes pgLightSweep {
+      to { transform: rotate(360deg); }
     }
     .pg-card {
+      position: relative; z-index: 1;
       background: #181818;
-      border: 1px solid rgba(234,179,8,0.3);
       border-radius: 20px; overflow: hidden;
     }
     /* Header — no separate bg, matches image */
