@@ -453,34 +453,13 @@
 
     /* ── Person Generator card ───────────────────────── */
     .pg-card-wrap {
-      position: relative;
       max-width: 500px;
       margin-left: auto;
-      border-radius: 21px;
-      padding: 1.5px;
-      box-shadow: 0 0 32px 6px rgba(234,179,8,0.08);
-    }
-    .pg-card-wrap::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      border-radius: 21px;
-      background: conic-gradient(from 0deg,
-        rgba(234,179,8,0.08) 0deg,
-        rgba(234,179,8,0.08) 280deg,
-        rgba(234,179,8,0.95) 320deg,
-        rgba(251,191,36,1)   340deg,
-        rgba(234,179,8,0.95) 360deg
-      );
-      animation: pgBorderSpin 6s linear infinite;
-      z-index: 0;
-    }
-    @keyframes pgBorderSpin {
-      to { transform: rotate(360deg); }
     }
     .pg-card {
-      position: relative; z-index: 1;
       background: #181818;
+      border: 1px solid rgba(234,179,8,0.6);
+      box-shadow: 0 0 18px 4px rgba(234,179,8,0.15);
       border-radius: 20px; overflow: hidden;
     }
     /* Header — no separate bg, matches image */
@@ -720,7 +699,7 @@
 
       /* Person generator */
       .person-gen-inner { grid-template-columns: 1fr; gap: 48px; }
-      .pg-card-wrap { max-width: none; margin-left: 0; }
+      .pg-card { max-width: none; margin-left: 0; }
       .pg-disclaimer-banner { padding-left: 28px; padding-right: 28px; }
       .person-gen-content { padding-top: 56px; }
 
@@ -1224,7 +1203,7 @@
       <!-- Right: coded generator card -->
       <div class="reveal" style="transition-delay:120ms">
         <div class="pg-card-wrap">
-        <div class="pg-card">
+          <div class="pg-card">
 
           <!-- Header -->
           <div class="pg-card-header">
