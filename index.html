@@ -1196,7 +1196,7 @@
         <ul class="pg-feature-list">
           <li><span class="pg-dot"></span>Full name, gender, date of birth &amp; age</li>
           <li><span class="pg-dot"></span>Realistic human avatar matched to age &amp; gender</li>
-          <li><span class="pg-dot"></span>Ghana Card, SSNIT, TIN, NIN, BVN, Voter ID</li>
+          <li><span class="pg-dot"></span>Ghana Card, SSNIT, NIN, BVN, Voter ID</li>
           <li><span class="pg-dot"></span>Home address + Ghana Post GPS or Nigerian location data</li>
           <li><span class="pg-dot"></span>Download as PDF or copy as JSON</li>
         </ul>
@@ -1258,10 +1258,6 @@
                   <span class="pg-row-label" data-pg-field="taxLabel">SSNIT</span>
                   <span class="pg-row-value" data-pg-field="taxValue">C002847391</span>
                 </div>
-                <div class="pg-row">
-                  <span class="pg-row-label" data-pg-field="voterLabel">TIN</span>
-                  <span class="pg-row-value" data-pg-field="voterValue">P0029384756</span>
-                </div>
               </div>
             </div>
 
@@ -1276,6 +1272,10 @@
                 <div class="pg-row">
                   <span class="pg-row-label" data-pg-field="locationLabel">GPS Address</span>
                   <span class="pg-row-value" data-pg-field="locationValue">AK-382-7491</span>
+                </div>
+                <div class="pg-row" data-pg-hide-nigeria>
+                  <span class="pg-row-label">Region</span>
+                  <span class="pg-row-value" data-pg-field="region">Greater Accra</span>
                 </div>
                 <div class="pg-row">
                   <span class="pg-row-label">Email</span>
@@ -1649,11 +1649,10 @@
         idValue: pick(db.ids),
         taxLabel: 'SSNIT',
         taxValue: `${personState.gender === 'male' ? 'C' : 'F'}${digits(9)}`,
-        voterLabel: 'TIN',
-        voterValue: `P${digits(10)}`,
         phone,
         locationLabel: 'GPS Address',
         locationValue: pick(db.gps),
+        region: region[0],
         email: genEmail(first, last),
         bank: pick(db.banks),
         account: pick(db.accounts),
@@ -1679,8 +1678,6 @@
       idValue: digits(11),
       taxLabel: 'BVN',
       taxValue: digits(11),
-      voterLabel: 'Voter ID',
-      voterValue: `VIN-${digits(10)}`,
       phone,
       locationLabel: 'State',
       locationValue: state[0],
@@ -1711,6 +1708,10 @@
       if (key === 'address') field.innerHTML = value;
       else field.textContent = value;
     });
+
+    personGenerator.querySelectorAll('[data-pg-hide-nigeria]').forEach(el => {
+      el.style.display = person.market === 'Nigeria' ? 'none' : '';
+    });
   }
 
   function personExportData() {
@@ -1726,12 +1727,12 @@
       identity: {
         'Date of Birth': person.dob,
         [person.idLabel]: person.idValue,
-        [person.taxLabel]: person.taxValue,
-        [person.voterLabel]: person.voterValue
+        [person.taxLabel]: person.taxValue
       },
       contact: {
         phone: person.phone,
         [person.locationLabel]: person.locationValue,
+        ...(person.region ? { region: person.region } : {}),
         email: person.email
       },
       finance: {
