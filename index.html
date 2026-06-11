@@ -171,6 +171,11 @@
       width: min(100%, 480px); height: auto; display: block;
       border-radius: 24px;
     }
+    .hero-img-mobile { display: none; }
+    @media (max-width: 1024px) {
+      .hero-img-desktop { display: none; }
+      .hero-img-mobile { display: block; }
+    }
     /* ─── SECTION SHARED ─────────────────────────────── */
     .section-eyebrow {
       font-size: 14px; font-weight: 600; letter-spacing: 0.12em;
@@ -1003,7 +1008,8 @@
       </div>
 
       <div class="hero-visual reveal" style="transition-delay:180ms">
-        <img src="./Video/hero.gif" alt="Contentify Figma plugin interface showing authentic West African data" width="480" height="480" loading="eager">
+        <img class="hero-img-desktop" src="./Video/hero.gif" alt="Contentify Figma plugin interface showing authentic West African data" width="480" height="480" loading="eager">
+        <img class="hero-img-mobile" src="./HERO1.png" alt="Contentify Figma plugin interface showing authentic West African data" width="480" height="480" loading="eager">
       </div>
     </div>
   </div>
