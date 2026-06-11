@@ -3,12 +3,35 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Contentify — Real West African Data for Figma</title>
+  <title>Contentify — Free Figma Plugin for Authentic Ghana &amp; Nigeria Data</title>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-72PYBD2K0N"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-72PYBD2K0N');
+  </script>
   <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
   <script>emailjs.init('70PieoVpuzpq4-aEV');</script>
   <link rel="icon" type="image/jpeg" href="./THUMBNAIL.jpg">
   <link rel="apple-touch-icon" href="./THUMBNAIL.jpg">
-  <meta name="description" content="Fill your Figma designs with authentic Ghanaian and Nigerian content. Real names, real places, real data. Free Figma plugin.">
+  <link rel="canonical" href="https://contentify.dev/">
+  <meta name="description" content="Contentify fills your Figma designs with authentic Ghanaian and Nigerian data — real names, addresses, phone numbers, IDs, and more. Free Figma plugin for African designers.">
+  <meta name="keywords" content="Figma plugin Ghana, Figma plugin Nigeria, West African data Figma, African UI design, Ghanaian names generator, Nigerian names generator, Figma dummy data Africa">
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://contentify.dev/">
+  <meta property="og:title" content="Contentify — Free Figma Plugin for Authentic Ghana &amp; Nigeria Data">
+  <meta property="og:description" content="Fill your Figma designs with authentic Ghanaian and Nigerian content. Real names, real places, real data. Free Figma plugin built for African designers.">
+  <meta property="og:image" content="https://contentify.dev/THUMBNAIL.jpg">
+  <meta property="og:site_name" content="Contentify">
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@francis_fara">
+  <meta name="twitter:title" content="Contentify — Free Figma Plugin for Authentic Ghana &amp; Nigeria Data">
+  <meta name="twitter:description" content="Fill your Figma designs with authentic Ghanaian and Nigerian content. Real names, real places, real data. Free.">
+  <meta name="twitter:image" content="https://contentify.dev/THUMBNAIL.jpg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -52,10 +75,10 @@
     /* TAG */
     .tag {
       display: inline-flex; align-items: center; gap: 6px;
-      font-size: 12px; font-weight: 500; letter-spacing: 0.04em;
-      color: var(--muted); background: var(--surface);
+      font-size: 13px; font-weight: 600; letter-spacing: 0.04em;
+      color: var(--fg); background: var(--surface);
       border: 1px solid var(--border); border-radius: 100px;
-      padding: 5px 14px;
+      padding: 6px 16px;
     }
     .tag .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); }
 
@@ -922,6 +945,7 @@
       <li><a href="#features">Features</a></li>
       <li><a href="#categories">Content Library</a></li>
       <li><a href="#person-gen">Person Generator</a></li>
+      <li><a href="./persona.html">Persona Creator</a></li>
       <li><a href="#how">How it works</a></li>
     </ul>
     <div class="nav-actions">
@@ -954,7 +978,7 @@
         <div class="hero-badge reveal">
           <span class="tag">
             <svg width="10" height="14" viewBox="0 0 10 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5 7C5 5.9 5.9 5 7 5C8.1 5 9 5.9 9 7C9 8.1 8.1 9 7 9C5.9 9 5 8.1 5 7Z" fill="#1ABCFE"/><path d="M1 11C1 9.9 1.9 9 3 9H5V11C5 12.1 4.1 13 3 13C1.9 13 1 12.1 1 11Z" fill="#0ACF83"/><path d="M5 1V5H7C8.1 5 9 4.1 9 3C9 1.9 8.1 1 7 1H5Z" fill="#FF7262"/><path d="M1 3C1 4.1 1.9 5 3 5H5V1H3C1.9 1 1 1.9 1 3Z" fill="#F24E1E"/><path d="M1 7C1 8.1 1.9 9 3 9H5V5H3C1.9 5 1 5.9 1 7Z" fill="#A259FF"/></svg>
-            Available free on Figma Community
+            200+ users on Figma Community
           </span>
         </div>
 
@@ -978,7 +1002,7 @@
       </div>
 
       <div class="hero-visual reveal" style="transition-delay:180ms">
-        <img src="./HERO1.png" alt="Contentify plugin interface preview">
+        <img src="./HERO1.png" alt="Contentify Figma plugin interface showing authentic West African data" width="480" height="480" loading="eager">
       </div>
     </div>
   </div>
@@ -1361,7 +1385,7 @@
       <div class="t-card reveal">
         <p class="t-quote">"Finally. I've been piecing together Ghanaian names manually for years. Contentify saved me hours on every project."</p>
         <div class="t-author">
-          <div class="t-avatar"><img src="./avatar/female/female2.png" alt="Akosua Mensah" style="width:100%;height:100%;object-fit:cover;border-radius:50%;display:block;"></div>
+          <div class="t-avatar"><img src="./avatar/female/female2.png" alt="Akosua Mensah" style="width:100%;height:100%;object-fit:cover;border-radius:50%;display:block;" loading="lazy"></div>
           <div>
             <div class="t-name">Akosua Mensah</div>
             <div class="t-role">Product Designer · Accra</div>
@@ -1371,7 +1395,7 @@
       <div class="t-card reveal" style="transition-delay:80ms">
         <p class="t-quote">"The Nigeria data is 🔥. I was designing a KYC flow and needed realistic names and phone numbers — this was exactly it."</p>
         <div class="t-author">
-          <div class="t-avatar"><img src="./avatar/male/male9.png" alt="Emeka Okafor" style="width:100%;height:100%;object-fit:cover;border-radius:50%;display:block;"></div>
+          <div class="t-avatar"><img src="./avatar/male/male9.png" alt="Emeka Okafor" style="width:100%;height:100%;object-fit:cover;border-radius:50%;display:block;" loading="lazy"></div>
           <div>
             <div class="t-name">Emeka Okafor</div>
             <div class="t-role">UX Designer · Lagos</div>
@@ -1470,6 +1494,7 @@
         <ul class="footer-col-links">
           <li><a href="https://www.figma.com/community/plugin/1631081710858656620/contentify" target="_blank" rel="noopener">Figma Plugin</a></li>
           <li><a href="#person-gen">Person Generator</a></li>
+          <li><a href="./persona.html">Persona Creator</a></li>
           <li><a href="#categories">Content Library</a></li>
         </ul>
       </div>
