@@ -653,7 +653,23 @@
     /* ─── FOOTER ─────────────────────────────────────── */
     .footer {
       background: var(--dark); border-top: 1px solid var(--dark-border);
-      padding: 64px 0 40px; color: var(--dark-fg);
+      padding: 64px 0 32px; color: var(--dark-fg);
+      overflow: hidden;
+    }
+    .footer-wordmark {
+      display: block;
+      font-size: min(15vw, 175px);
+      font-weight: 900;
+      color: #fff;
+      text-align: center;
+      white-space: nowrap;
+      line-height: 0.85;
+      margin-top: 112px;
+      margin-bottom: 8px;
+      padding: 0 2px;
+      letter-spacing: -0.01em;
+      user-select: none;
+      pointer-events: none;
     }
     .footer-inner { display: grid; grid-template-columns: 1fr max-content max-content max-content; gap: 72px; margin-bottom: 56px; }
     .footer-inner > div { text-align: left; }
@@ -816,7 +832,7 @@
       .cta-sub { font-size: 15px; margin-bottom: 32px; }
 
       /* Footer */
-      .footer { padding: 48px 0 32px; }
+      .footer { padding: 48px 0 24px; }
       .footer-inner { grid-template-columns: 1fr 1fr; gap: 32px; margin-bottom: 40px; }
       .footer-bottom { flex-direction: column; align-items: flex-start; gap: 6px; }
 
@@ -979,7 +995,7 @@
         <div class="hero-badge reveal">
           <span class="tag">
             <svg width="10" height="14" viewBox="0 0 10 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5 7C5 5.9 5.9 5 7 5C8.1 5 9 5.9 9 7C9 8.1 8.1 9 7 9C5.9 9 5 8.1 5 7Z" fill="#1ABCFE"/><path d="M1 11C1 9.9 1.9 9 3 9H5V11C5 12.1 4.1 13 3 13C1.9 13 1 12.1 1 11Z" fill="#0ACF83"/><path d="M5 1V5H7C8.1 5 9 4.1 9 3C9 1.9 8.1 1 7 1H5Z" fill="#FF7262"/><path d="M1 3C1 4.1 1.9 5 3 5H5V1H3C1.9 1 1 1.9 1 3Z" fill="#F24E1E"/><path d="M1 7C1 8.1 1.9 9 3 9H5V5H3C1.9 5 1 5.9 1 7Z" fill="#A259FF"/></svg>
-            200+ users on Figma Community
+            300+ users on Figma Community
           </span>
         </div>
 
@@ -1518,6 +1534,7 @@
       <span class="footer-copy">© 2026 Contentify. Built by Francis Fara</span>
       <span class="footer-note">All generated data is synthetic. Not for official use.</span>
     </div>
+    <span class="footer-wordmark" aria-hidden="true">CONTENTIFY</span>
   </div>
 </footer>
 
@@ -1959,6 +1976,7 @@
       if (!isOpen) item.classList.add('open');
     });
   });
+
 </script>
 
 <div class="pg-toast" id="pg-toast" role="status" aria-live="polite"></div>
