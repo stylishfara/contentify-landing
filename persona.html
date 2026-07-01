@@ -1,0 +1,1405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Persona Creator — Contentify</title>
+  <link rel="icon" type="image/jpeg" href="./THUMBNAIL.jpg">
+  <link rel="apple-touch-icon" href="./THUMBNAIL.jpg">
+  <meta name="description" content="Generate culturally grounded West African user personas in seconds. Built for designers working in Ghana and Nigeria.">
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-72PYBD2K0N"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-72PYBD2K0N');
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #FFFFFF;
+      --fg: #404040;
+      --accent: #0A0A0A;
+      --accent-hover: #2a2a2a;
+      --surface: #FFFFFF;
+      --surface-2: #F0F0F0;
+      --border: #E5E5E5;
+      --muted: #737373;
+      --dark: #0A0A0A;
+      --dark-fg: #FAFAFA;
+      --dark-muted: #888888;
+      --dark-border: rgba(255,255,255,0.08);
+      --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+      --max-w: 1200px;
+      --nav-h: 64px;
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Geist', -apple-system, 'Helvetica Neue', sans-serif;
+      background: var(--dark);
+      color: var(--dark-fg);
+      font-size: 16px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+    .container { max-width: var(--max-w); margin: 0 auto; padding: 0 40px; }
+
+    /* ─── BUTTONS ─────────────────────────────────────── */
+    .btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-family: 'Geist', sans-serif; font-size: 14px; font-weight: 600;
+      height: 36px; border-radius: 100px; padding: 0 18px; cursor: pointer;
+      border: none; text-decoration: none;
+      transition: transform 160ms cubic-bezier(0.23,1,0.32,1), background 150ms ease, opacity 150ms ease;
+    }
+    .btn:active { transform: scale(0.97); }
+    .btn-primary { background: var(--accent); color: #FFFFFF; }
+    .btn-primary:hover { background: var(--accent-hover); }
+    .btn-outline { background: transparent; color: var(--fg); border: 1.5px solid var(--border); }
+    .btn-outline:hover { background: var(--surface); border-color: #C8C8C8; }
+    .btn-lg { height: 40px; font-size: 14px; padding: 0 22px; }
+
+    /* ─── NAV ─────────────────────────────────────────── */
+    .nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 50;
+      height: var(--nav-h);
+      background: rgba(10,10,10,0.88);
+      backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--dark-border);
+    }
+    .nav-inner {
+      max-width: var(--max-w); margin: 0 auto; padding: 0 40px;
+      height: 100%; display: flex; align-items: center; justify-content: space-between;
+    }
+    .nav-logo {
+      display: flex; align-items: center; gap: 9px;
+      text-decoration: none; color: var(--dark-fg);
+    }
+    .nav-logo-img { width: 28px; height: 28px; border-radius: 7px; object-fit: cover; flex-shrink: 0; }
+    .nav-logo-text { font-size: 15px; font-weight: 500; letter-spacing: -0.3px; }
+    .nav-links { display: flex; align-items: center; gap: 32px; list-style: none; }
+    .nav-links a {
+      font-size: 14px; font-weight: 500; color: var(--dark-muted);
+      text-decoration: none; transition: color 150ms ease;
+    }
+    .nav-links a:hover { color: var(--dark-fg); }
+    .nav-links a.active { color: var(--dark-fg); }
+    .nav-actions { display: flex; align-items: center; gap: 12px; }
+    .nav-hamburger {
+      display: none; flex-direction: column; justify-content: center; gap: 5px;
+      width: 36px; height: 36px; background: none; border: none; cursor: pointer;
+      padding: 6px; border-radius: 8px; flex-shrink: 0;
+    }
+    .nav-hamburger span {
+      display: block; width: 18px; height: 1.5px;
+      background: var(--dark-fg); border-radius: 2px;
+      transition: transform 0.2s, opacity 0.2s;
+    }
+    .nav-hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+    .nav-hamburger.open span:nth-child(2) { opacity: 0; }
+    .nav-hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+    .nav-drawer {
+      display: none; position: fixed; top: var(--nav-h); left: 0; right: 0;
+      background: #111; border-bottom: 1px solid var(--dark-border);
+      z-index: 99; padding: 8px 0 16px;
+    }
+    .nav-drawer.open { display: block; }
+    .nav-drawer ul { list-style: none; padding: 0; margin: 0; }
+    .nav-drawer ul li a {
+      display: block; padding: 14px 20px;
+      font-size: 16px; font-weight: 500; color: var(--dark-fg);
+      text-decoration: none;
+    }
+    .nav-drawer ul li a:hover { color: var(--dark-muted); }
+
+    /* ─── HERO ────────────────────────────────────────── */
+    .pc-hero {
+      padding-top: calc(var(--nav-h) + 64px);
+      padding-bottom: 56px;
+      position: relative; overflow: hidden;
+    }
+    .pc-hero::before {
+      content: '';
+      position: absolute; inset: 0; pointer-events: none;
+      background-image: radial-gradient(circle, rgba(255,255,255,0.06) 1px, transparent 1px);
+      background-size: 28px 28px;
+    }
+    .pc-hero-inner { position: relative; z-index: 1; text-align: center; }
+    .pc-eyebrow {
+      display: inline-flex; align-items: center; gap: 7px;
+      font-size: 11px; font-weight: 600; letter-spacing: 0.12em;
+      text-transform: uppercase; color: #eab308;
+      margin-bottom: 20px;
+    }
+    .pc-eyebrow-dot { width: 5px; height: 5px; border-radius: 50%; background: #eab308; flex-shrink: 0; }
+    .pc-hero-title {
+      font-size: clamp(36px, 5vw, 56px); font-weight: 600;
+      letter-spacing: -0.04em; line-height: 1.0;
+      margin-bottom: 18px;
+    }
+    .pc-hero-sub {
+      font-size: 16px; color: var(--dark-muted); line-height: 1.7;
+      max-width: 520px; margin: 0 auto;
+    }
+
+    /* ─── TOOL AREA ───────────────────────────────────── */
+    .pc-tool {
+      padding: 48px 0 96px;
+      position: relative;
+    }
+    .pc-tool-grid {
+      display: grid;
+      grid-template-columns: 340px 1fr;
+      gap: 32px;
+      align-items: start;
+    }
+
+    /* ─── CONTEXT PANEL ───────────────────────────────── */
+    .pc-context {
+      position: sticky;
+      top: calc(var(--nav-h) + 24px);
+      background: #111111;
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 16px;
+      overflow: hidden;
+    }
+    .pc-context-head {
+      padding: 20px 20px 16px;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .pc-context-title {
+      font-size: 13px; font-weight: 600; color: var(--dark-fg);
+      letter-spacing: -0.01em; margin-bottom: 4px;
+    }
+    .pc-context-sub { font-size: 12px; color: #555; line-height: 1.5; }
+    .pc-context-body { padding: 20px; display: flex; flex-direction: column; gap: 18px; }
+
+    .pc-field { display: flex; flex-direction: column; gap: 7px; }
+    .pc-field label {
+      font-size: 12px; font-weight: 600; color: #888;
+      letter-spacing: 0.04em; text-transform: uppercase;
+    }
+    .pc-field select,
+    .pc-field textarea {
+      width: 100%;
+      background: #0d0d0d;
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 10px;
+      padding: 10px 12px;
+      font-family: 'Geist', sans-serif;
+      font-size: 13px; color: var(--dark-fg);
+      outline: none;
+      transition: border-color 150ms ease, box-shadow 150ms ease;
+    }
+    .pc-field select {
+      appearance: none; -webkit-appearance: none;
+      padding-right: 34px;
+      background-image: url("data:image/svg+xml,%3Csvg width='14' height='14' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='m6 9 6 6 6-6' stroke='%23666' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 12px center;
+      cursor: pointer;
+    }
+    .pc-field select option { background: #1a1a1a; }
+    .pc-field textarea { height: 80px; resize: none; line-height: 1.55; }
+    .pc-field select:focus,
+    .pc-field textarea:focus {
+      border-color: rgba(255,255,255,0.22);
+      box-shadow: 0 0 0 3px rgba(255,255,255,0.05);
+    }
+    .pc-field textarea::placeholder { color: #444; }
+
+    .pc-market-group { display: flex; gap: 8px; }
+    .pc-market-btn {
+      flex: 1; height: 36px; border-radius: 8px;
+      background: #0d0d0d;
+      border: 1px solid rgba(255,255,255,0.1);
+      color: #666;
+      font-family: 'Geist', sans-serif;
+      font-size: 12px; font-weight: 600;
+      cursor: pointer;
+      transition: all 150ms ease;
+      display: flex; align-items: center; justify-content: center; gap: 6px;
+    }
+    .pc-market-btn:hover { border-color: rgba(255,255,255,0.2); color: var(--dark-fg); }
+    .pc-market-btn.active {
+      background: #1a1a1a;
+      border-color: rgba(255,255,255,0.3);
+      color: var(--dark-fg);
+    }
+
+    .pc-generate-btn {
+      width: 100%;
+      height: 44px;
+      background: #FFFFFF;
+      color: #0A0A0A;
+      border: none;
+      border-radius: 10px;
+      font-family: 'Geist', sans-serif;
+      font-size: 14px; font-weight: 700;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+      transition: opacity 150ms ease, transform 150ms ease;
+      margin-top: 4px;
+    }
+    .pc-generate-btn:hover { opacity: 0.88; }
+    .pc-generate-btn:active { transform: scale(0.98); }
+    .pc-generate-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+    .pc-generate-btn.loading { opacity: 0.7; }
+
+    .pc-spin {
+      width: 14px; height: 14px;
+      border: 2px solid rgba(0,0,0,0.15);
+      border-top-color: #0A0A0A;
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ─── PERSONA CARD ────────────────────────────────── */
+    .pc-card-wrap {
+      min-height: 500px;
+    }
+
+    .pc-empty {
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      min-height: 480px;
+      border: 1px dashed rgba(255,255,255,0.1);
+      border-radius: 16px;
+      text-align: center;
+      padding: 48px;
+      gap: 16px;
+    }
+    .pc-empty-icon {
+      width: 48px; height: 48px;
+      background: #1a1a1a;
+      border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .pc-empty-icon svg { width: 22px; height: 22px; color: #444; }
+    .pc-empty-title { font-size: 16px; font-weight: 600; color: #444; }
+    .pc-empty-sub { font-size: 14px; color: #333; max-width: 280px; line-height: 1.6; }
+
+    .pc-card {
+      background: #111111;
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 16px;
+      overflow: hidden;
+      display: none;
+    }
+    .pc-card.visible { display: block; }
+
+    /* Card header */
+    .pc-card-header {
+      padding: 20px 20px 0;
+      display: flex; align-items: flex-start; justify-content: space-between; gap: 16px;
+    }
+    .pc-card-header-left { display: flex; align-items: flex-start; gap: 16px; }
+    .pc-persona-avatar {
+      width: 64px; height: 64px; border-radius: 12px; flex-shrink: 0;
+      background: #222; overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.07);
+    }
+    .pc-persona-avatar img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .pc-persona-name {
+      font-size: 20px; font-weight: 700;
+      letter-spacing: -0.03em; color: var(--dark-fg);
+      margin-bottom: 4px;
+    }
+    .pc-persona-meta { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+    .pc-meta-tag {
+      display: inline-flex; align-items: center; gap: 5px;
+      font-size: 11px; font-weight: 600;
+      padding: 3px 9px; border-radius: 100px;
+      background: #1e1e1e; border: 1px solid rgba(255,255,255,0.1);
+      color: #999; letter-spacing: 0.02em;
+    }
+    .pc-meta-tag.market { background: rgba(234,179,8,0.1); border-color: rgba(234,179,8,0.25); color: #eab308; }
+    .pc-regen-all {
+      display: inline-flex; align-items: center; gap: 6px;
+      height: 32px; padding: 0 12px; border-radius: 8px;
+      background: transparent; border: 1px solid rgba(255,255,255,0.1);
+      color: #666; font-family: 'Geist', sans-serif;
+      font-size: 12px; font-weight: 600;
+      cursor: pointer; flex-shrink: 0;
+      transition: all 150ms ease;
+    }
+    .pc-regen-all:hover { border-color: rgba(255,255,255,0.2); color: var(--dark-fg); }
+    .pc-regen-all svg { width: 12px; height: 12px; }
+
+    /* Card body */
+    .pc-card-body { padding: 20px; display: flex; flex-direction: column; gap: 0; }
+
+    .pc-section {
+      padding: 18px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+    .pc-section:last-child { border-bottom: 0; }
+
+    .pc-section-head {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 12px;
+    }
+    .pc-section-label {
+      font-size: 10px; font-weight: 600; letter-spacing: 0.12em;
+      text-transform: uppercase; color: #444;
+    }
+    .pc-refresh-btn {
+      width: 24px; height: 24px; border-radius: 6px;
+      background: transparent; border: 1px solid transparent;
+      color: #444; cursor: pointer;
+      display: inline-flex; align-items: center; justify-content: center;
+      transition: all 150ms ease;
+    }
+    .pc-refresh-btn:hover { background: #1e1e1e; border-color: rgba(255,255,255,0.1); color: #888; }
+    .pc-refresh-btn svg { width: 12px; height: 12px; }
+    .pc-refresh-btn.spinning svg { animation: spin 0.6s linear infinite; }
+
+    /* Bio */
+    .pc-bio-text {
+      font-size: 14px; color: #bbb; line-height: 1.75;
+    }
+
+    /* Goals & Frustrations */
+    .pc-two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .pc-gf-col-title {
+      font-size: 11px; font-weight: 600; color: #555;
+      margin-bottom: 10px; display: flex; align-items: center; gap: 6px;
+    }
+    .pc-gf-col-title svg { width: 11px; height: 11px; }
+    .pc-gf-list { display: flex; flex-direction: column; gap: 8px; }
+    .pc-gf-item {
+      display: flex; align-items: flex-start; gap: 8px;
+      font-size: 13px; color: #999; line-height: 1.55;
+    }
+    .pc-gf-dot {
+      width: 5px; height: 5px; border-radius: 50%; flex-shrink: 0;
+      margin-top: 6px;
+    }
+    .pc-gf-dot.goal { background: #22c55e; }
+    .pc-gf-dot.frustration { background: #ef4444; }
+
+    /* Behaviour */
+    .pc-behaviour-grid { display: flex; flex-direction: column; gap: 8px; }
+    .pc-behaviour-row {
+      display: grid; grid-template-columns: 96px 1fr; gap: 8px; align-items: baseline;
+    }
+    .pc-brow-label { font-size: 12px; color: #555; }
+    .pc-brow-value { font-size: 13px; color: #bbb; }
+
+    /* Quote */
+    .pc-quote {
+      font-size: 15px; font-style: italic; color: #888; line-height: 1.7;
+      padding-left: 14px;
+      border-left: 2px solid rgba(255,255,255,0.1);
+    }
+
+    /* Card footer */
+    .pc-card-foot {
+      padding: 14px 20px;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+    }
+    .pc-foot-btn {
+      display: inline-flex; align-items: center; gap: 6px;
+      height: 34px; padding: 0 14px; border-radius: 8px;
+      font-family: 'Geist', sans-serif; font-size: 12px; font-weight: 600;
+      cursor: pointer; transition: all 150ms ease; border: none;
+    }
+    .pc-foot-btn svg { width: 13px; height: 13px; }
+    .pc-foot-btn.ghost {
+      background: transparent; border: 1px solid rgba(255,255,255,0.1); color: #666;
+    }
+    .pc-foot-btn.ghost:hover { background: #1e1e1e; color: #bbb; }
+    .pc-foot-btn.solid {
+      background: #FFFFFF; color: #0A0A0A;
+    }
+    .pc-foot-btn.solid:hover { opacity: 0.85; }
+    .pc-foot-sep { flex: 1; }
+
+    /* ─── FOOTER ──────────────────────────────────────── */
+    .footer {
+      background: var(--dark); border-top: 1px solid var(--dark-border);
+      padding: 64px 0 40px; color: var(--dark-fg);
+    }
+    .footer-inner {
+      display: grid;
+      grid-template-columns: 1fr max-content max-content max-content;
+      gap: 72px; margin-bottom: 56px;
+    }
+    .footer-inner > div { text-align: left; }
+    .footer-inner > div:not(:first-child) { justify-self: start; }
+    .footer-logo {
+      display: flex; align-items: center; gap: 8px;
+      margin-bottom: 14px; text-decoration: none; color: var(--dark-fg);
+    }
+    .footer-logo-img {
+      width: 26px; height: 26px; border-radius: 6px;
+      object-fit: cover; flex-shrink: 0;
+    }
+    .footer-logo-text { font-size: 15px; font-weight: 500; }
+    .footer-brand-copy { font-size: 14px; color: var(--dark-muted); line-height: 1.65; max-width: 220px; }
+    .footer-col-title {
+      font-size: 11px; font-weight: 600; letter-spacing: 0.08em;
+      text-transform: uppercase; color: #444; margin-bottom: 18px;
+    }
+    .footer-col-links { list-style: none; display: flex; flex-direction: column; gap: 18px; }
+    .footer-col-links a {
+      font-size: 14px; color: var(--dark-muted);
+      text-decoration: none; transition: color 150ms ease;
+    }
+    .footer-col-links a:hover { color: var(--dark-fg); }
+    .footer-bottom {
+      display: flex; align-items: center; justify-content: space-between;
+      padding-top: 24px; border-top: 1px solid var(--dark-border);
+    }
+    .footer-copy { font-size: 13px; color: var(--dark-muted); }
+    .footer-note { font-size: 12px; color: var(--dark-muted); opacity: 0.45; }
+    .footer-social { display: flex; align-items: center; gap: 14px; margin-top: 14px; }
+    .footer-social a { color: var(--dark-muted); display: inline-flex; align-items: center; transition: color 150ms ease; }
+    .footer-social a:hover { color: var(--dark-fg); }
+
+    /* ─── TOAST ───────────────────────────────────────── */
+    .pc-toast {
+      position: fixed; bottom: 28px; right: 28px;
+      transform: translateY(12px);
+      background: #1a1a1a; color: #fff;
+      font-size: 13px; font-weight: 500; font-family: 'Geist', sans-serif;
+      padding: 10px 16px; border-radius: 100px;
+      display: flex; align-items: center; gap: 8px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.2s ease, transform 0.2s ease;
+      z-index: 9999; white-space: nowrap;
+    }
+    .pc-toast.show { opacity: 1; transform: translateY(0); }
+    .pc-toast.error { background: #c0392b; }
+
+    /* ─── RESPONSIVE ──────────────────────────────────── */
+    @media (max-width: 1024px) {
+      .container { padding: 0 28px; }
+      .nav-inner { padding: 0 28px; }
+      .pc-tool-grid { grid-template-columns: 300px 1fr; gap: 24px; }
+    }
+    @media (max-width: 768px) {
+      :root { --nav-h: 58px; }
+      .container { padding: 0 20px; }
+      .nav-inner { padding: 0 20px; }
+      .nav-links { display: none; }
+      .nav-hamburger { display: flex; }
+      .pc-tool-grid { grid-template-columns: 1fr; }
+      .pc-context { position: static; }
+      .pc-hero { padding-top: calc(var(--nav-h) + 48px); padding-bottom: 40px; }
+      .pc-hero-title { font-size: clamp(30px, 8vw, 44px); }
+      .pc-two-col { grid-template-columns: 1fr; }
+      .footer-inner { grid-template-columns: 1fr 1fr; gap: 32px; margin-bottom: 40px; }
+      .footer-bottom { flex-direction: column; align-items: flex-start; gap: 6px; }
+    }
+    @media (max-width: 480px) {
+      .footer-inner { grid-template-columns: 1fr; gap: 28px; }
+      .pc-card-foot { flex-direction: column; align-items: stretch; }
+      .pc-foot-sep { display: none; }
+      .pc-foot-btn { justify-content: center; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      * { transition-duration: 0.01ms !important; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ─── NAV ─────────────────────────────────────────── -->
+<nav class="nav" id="nav">
+  <div class="nav-inner">
+    <a href="./index.html" class="nav-logo">
+      <img src="./THUMBNAIL.jpg" alt="Contentify" class="nav-logo-img">
+      <span class="nav-logo-text">Contentify</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="./index.html#features">Features</a></li>
+      <li><a href="./index.html#categories">Content Library</a></li>
+      <li><a href="./index.html#person-gen">Person Generator</a></li>
+    </ul>
+    <div class="nav-actions">
+      <a href="https://www.figma.com/community/plugin/1631081710858656620/contentify" target="_blank" rel="noopener" class="btn btn-primary btn-lg">
+        <svg width="10" height="14" viewBox="0 0 10 14" fill="none"><path d="M5 7C5 5.9 5.9 5 7 5C8.1 5 9 5.9 9 7C9 8.1 8.1 9 7 9C5.9 9 5 8.1 5 7Z" fill="#1ABCFE"/><path d="M1 11C1 9.9 1.9 9 3 9H5V11C5 12.1 4.1 13 3 13C1.9 13 1 12.1 1 11Z" fill="#0ACF83"/><path d="M5 1V5H7C8.1 5 9 4.1 9 3C9 1.9 8.1 1 7 1H5Z" fill="#FF7262"/><path d="M1 3C1 4.1 1.9 5 3 5H5V1H3C1.9 1 1 1.9 1 3Z" fill="#F24E1E"/><path d="M1 7C1 8.1 1.9 9 3 9H5V5H3C1.9 5 1 5.9 1 7Z" fill="#A259FF"/></svg>
+        Get the Plugin
+      </a>
+      <button class="nav-hamburger" id="nav-hamburger" aria-label="Open menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- Mobile nav drawer -->
+<div class="nav-drawer" id="nav-drawer" aria-hidden="true">
+  <ul>
+    <li><a href="./index.html#features">Features</a></li>
+    <li><a href="./index.html#categories">Content Library</a></li>
+    <li><a href="./index.html#person-gen">Person Generator</a></li>
+  </ul>
+</div>
+
+<!-- ─── HERO ─────────────────────────────────────────── -->
+<section class="pc-hero">
+  <div class="container">
+    <div class="pc-hero-inner">
+      <div class="pc-eyebrow">
+        <span class="pc-eyebrow-dot"></span>
+        New · Persona Creator
+      </div>
+      <h1 class="pc-hero-title">Your users, brought to life.</h1>
+      <p class="pc-hero-sub">Add your product context and get a fully generated West African user persona — grounded in real culture, not generic templates.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ─── TOOL ──────────────────────────────────────────── -->
+<section class="pc-tool">
+  <div class="container">
+    <div class="pc-tool-grid">
+
+      <!-- Left: Context Form -->
+      <div class="pc-context">
+        <div class="pc-context-head">
+          <div class="pc-context-title">Project Context</div>
+          <div class="pc-context-sub">Tell us about your product to get a tailored persona.</div>
+        </div>
+        <div class="pc-context-body">
+
+          <div class="pc-field">
+            <label for="pc-product-type">Product type</label>
+            <select id="pc-product-type">
+              <option value="fintech">Fintech / Financial Services</option>
+              <option value="healthtech">Health & Wellness</option>
+              <option value="ecommerce">E-commerce / Shopping</option>
+              <option value="logistics">Logistics / Delivery</option>
+              <option value="education">Education / Learning</option>
+              <option value="agritech">Agritech / Farming</option>
+              <option value="other">Other / General</option>
+            </select>
+          </div>
+
+          <div class="pc-field">
+            <label for="pc-audience">Target audience</label>
+            <select id="pc-audience">
+              <option value="general">General Public</option>
+              <option value="smallbiz">Small Business Owners</option>
+              <option value="students">Students</option>
+              <option value="professionals">Professionals</option>
+              <option value="traders">Market Traders</option>
+              <option value="farmers">Farmers / Rural</option>
+            </select>
+          </div>
+
+          <div class="pc-field">
+            <label>Market</label>
+            <div class="pc-market-group">
+              <button class="pc-market-btn active" data-market="ghana">🇬🇭 Ghana</button>
+              <button class="pc-market-btn" data-market="nigeria">🇳🇬 Nigeria</button>
+              <button class="pc-market-btn" data-market="both">Both</button>
+            </div>
+          </div>
+
+          <div class="pc-field">
+            <label for="pc-problem">Core problem your product solves</label>
+            <textarea id="pc-problem" placeholder="e.g. People struggle to save money consistently..."></textarea>
+          </div>
+
+          <button class="pc-generate-btn" id="pc-generate-btn">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.912 5.813a2 2 0 0 0 1.275 1.275L21 12l-5.813 1.912a2 2 0 0 0-1.275 1.275L12 21l-1.912-5.813a2 2 0 0 0-1.275-1.275L3 12l5.813-1.912a2 2 0 0 0 1.275-1.275L12 3z"/></svg>
+            Generate Persona
+          </button>
+
+        </div>
+      </div>
+
+      <!-- Right: Persona Card -->
+      <div class="pc-card-wrap">
+
+        <!-- Empty state -->
+        <div class="pc-empty" id="pc-empty">
+          <div class="pc-empty-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          </div>
+          <div class="pc-empty-title">No persona yet</div>
+          <div class="pc-empty-sub">Fill in your project context on the left and hit Generate Persona.</div>
+        </div>
+
+        <!-- Generated card -->
+        <div class="pc-card" id="pc-card">
+
+          <!-- Card header -->
+          <div class="pc-card-header">
+            <div class="pc-card-header-left">
+              <div class="pc-persona-avatar">
+                <img id="pc-avatar-img" src="" alt="Persona avatar">
+              </div>
+              <div>
+                <div class="pc-persona-name" id="pc-name">—</div>
+                <div class="pc-persona-meta">
+                  <span class="pc-meta-tag" id="pc-age-tag">Age —</span>
+                  <span class="pc-meta-tag" id="pc-occ-tag">—</span>
+                  <span class="pc-meta-tag" id="pc-city-tag">—</span>
+                  <span class="pc-meta-tag market" id="pc-market-tag">—</span>
+                </div>
+              </div>
+            </div>
+            <button class="pc-regen-all" id="pc-regen-all-btn" title="Regenerate full persona">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M8 16H3v5"/></svg>
+              Regenerate
+            </button>
+          </div>
+
+          <!-- Card body -->
+          <div class="pc-card-body">
+
+            <!-- Bio -->
+            <div class="pc-section">
+              <div class="pc-section-head">
+                <span class="pc-section-label">Bio</span>
+                <button class="pc-refresh-btn" data-section="bio" title="Refresh bio">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M8 16H3v5"/></svg>
+                </button>
+              </div>
+              <p class="pc-bio-text" id="pc-bio">—</p>
+            </div>
+
+            <!-- Goals & Frustrations -->
+            <div class="pc-section">
+              <div class="pc-section-head">
+                <span class="pc-section-label">Goals &amp; Frustrations</span>
+                <button class="pc-refresh-btn" data-section="gf" title="Refresh goals & frustrations">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M8 16H3v5"/></svg>
+                </button>
+              </div>
+              <div class="pc-two-col">
+                <div>
+                  <div class="pc-gf-col-title">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                    Goals
+                  </div>
+                  <ul class="pc-gf-list" id="pc-goals"></ul>
+                </div>
+                <div>
+                  <div class="pc-gf-col-title">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                    Frustrations
+                  </div>
+                  <ul class="pc-gf-list" id="pc-frustrations"></ul>
+                </div>
+              </div>
+            </div>
+
+            <!-- Behaviour & Tech -->
+            <div class="pc-section">
+              <div class="pc-section-head">
+                <span class="pc-section-label">Behaviour &amp; Tech</span>
+                <button class="pc-refresh-btn" data-section="behaviour" title="Refresh behaviour">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M8 16H3v5"/></svg>
+                </button>
+              </div>
+              <div class="pc-behaviour-grid" id="pc-behaviour"></div>
+            </div>
+
+            <!-- Quote -->
+            <div class="pc-section">
+              <div class="pc-section-head">
+                <span class="pc-section-label">In their own words</span>
+                <button class="pc-refresh-btn" data-section="quote" title="Refresh quote">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M8 16H3v5"/></svg>
+                </button>
+              </div>
+              <blockquote class="pc-quote" id="pc-quote">—</blockquote>
+            </div>
+
+          </div>
+
+          <!-- Card footer -->
+          <div class="pc-card-foot">
+            <button class="pc-foot-btn ghost" id="pc-copy-json-btn">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+              Copy JSON
+            </button>
+            <button class="pc-foot-btn ghost" id="pc-copy-text-btn">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+              Copy Text
+            </button>
+            <button class="pc-foot-btn ghost" id="pc-download-pdf-btn">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              Download PDF
+            </button>
+            <div class="pc-foot-sep"></div>
+            <button class="pc-foot-btn solid" id="pc-next-btn">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.912 5.813a2 2 0 0 0 1.275 1.275L21 12l-5.813 1.912a2 2 0 0 0-1.275 1.275L12 21l-1.912-5.813a2 2 0 0 0-1.275-1.275L3 12l5.813-1.912a2 2 0 0 0 1.275-1.275L12 3z"/></svg>
+              New Persona
+            </button>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ─── FOOTER ────────────────────────────────────────── -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-inner">
+      <div>
+        <a href="./index.html" class="footer-logo">
+          <img src="./THUMBNAIL.jpg" alt="Contentify" class="footer-logo-img">
+          <span class="footer-logo-text">Contentify</span>
+        </a>
+        <p class="footer-brand-copy">Real West African content for Figma designers. Built in Ghana, used across Africa.</p>
+        <div class="footer-social">
+          <a href="https://x.com/francis_fara" target="_blank" rel="noopener" aria-label="Francis Fara on X">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.746l7.73-8.835L1.254 2.25H8.08l4.259 5.63 5.905-5.63Zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+          </a>
+          <a href="mailto:francismensah02@gmail.com" aria-label="Email Francis">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+          </a>
+        </div>
+      </div>
+      <div>
+        <p class="footer-col-title">Product</p>
+        <ul class="footer-col-links">
+          <li><a href="https://www.figma.com/community/plugin/1631081710858656620/contentify" target="_blank" rel="noopener">Figma Plugin</a></li>
+          <li><a href="./index.html#person-gen">Person Generator</a></li>
+          <li><a href="./persona.html">Persona Creator</a></li>
+          <li><a href="./index.html#categories">Content Library</a></li>
+        </ul>
+      </div>
+      <div>
+        <p class="footer-col-title">Resources</p>
+        <ul class="footer-col-links">
+          <li><a href="./index.html#how">How it works</a></li>
+          <li><a href="./index.html#faq">FAQ</a></li>
+          <li><a href="./index.html#request-category">Request a category</a></li>
+        </ul>
+      </div>
+      <div>
+        <p class="footer-col-title">Legal</p>
+        <ul class="footer-col-links">
+          <li><a href="./privacy.html">Privacy Policy</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span class="footer-copy">© 2026 Contentify. Built by Francis Fara</span>
+      <span class="footer-note">All generated personas are synthetic. Not real people.</span>
+    </div>
+  </div>
+</footer>
+
+<!-- Toast -->
+<div class="pc-toast" id="pc-toast"></div>
+
+<script>
+  // ─── DATA ─────────────────────────────────────────────────
+  const DB = {
+    ghana: {
+      male: {
+        first: ['Kwame','Kojo','Kofi','Kwabena','Kweku','Fiifi','Kwasi','Kwadwo','Nana','Yaw','Ebo','Nii','Tetteh','Ekow','Kobby'],
+        last:  ['Mensah','Asante','Boateng','Owusu','Amponsah','Acheampong','Darko','Adjei','Amoah','Frimpong','Sarpong','Kyei','Dankwa','Akoto','Ofori','Appiah','Danso']
+      },
+      female: {
+        first: ['Abena','Akosua','Ama','Adwoa','Akua','Yaa','Efua','Afia','Maame','Abenaa','Ewurama','Naana','Gifty','Serwaah','Akos'],
+        last:  ['Mensah','Asante','Boateng','Owusu','Amponsah','Acheampong','Darko','Adjei','Amoah','Frimpong','Sarpong','Kyei','Dankwa','Akoto','Ofori','Appiah','Danso']
+      },
+      cities: ['Accra','Kumasi','Tema','Cape Coast','Takoradi','Ho','Tamale','Sunyani','Koforidua','Techiman','Kasoa','Madina','Ashaiman','Obuasi','Wa'],
+      regions: ['Greater Accra','Ashanti','Western','Eastern','Central','Northern','Volta','Bono','Upper East','Western North'],
+      banks: ['GCB Bank','Ecobank Ghana','Absa Bank Ghana','Stanbic Bank Ghana','Cal Bank','Fidelity Bank','Access Bank Ghana','Republic Bank','Consolidated Bank'],
+      momo: ['MTN MoMo','AirtelTigo Money','Telecel Cash'],
+      phones: ['Tecno Spark 10 Pro','Infinix Hot 30','Samsung Galaxy A14','Itel A70','Tecno Camon 20','Infinix Zero 20','Samsung Galaxy A54','Tecno Pop 7 Pro','Infinix Smart 7']
+    },
+    nigeria: {
+      male: {
+        first: ['Emeka','Tunde','Chidi','Seun','Femi','Gbenga','Kunle','Rotimi','Nnamdi','Uche','Adewale','Biodun','Obinna','Ayo','Dimma','Kelechi','Tobi'],
+        last:  ['Okonkwo','Adeyemi','Okafor','Babatunde','Nwosu','Eze','Oduya','Ibrahim','Adesanya','Olawale','Chukwu','Musa','Obi','Adeleke','Nwachukwu','Abubakar','Lawal']
+      },
+      female: {
+        first: ['Ngozi','Chioma','Funke','Sola','Bimpe','Amaka','Yetunde','Adaeze','Temi','Kemi','Chibundo','Chiamaka','Nneka','Shade','Oyinkansola'],
+        last:  ['Okonkwo','Adeyemi','Okafor','Babatunde','Nwosu','Eze','Oduya','Ibrahim','Adesanya','Olawale','Chukwu','Musa','Obi','Adeleke','Nwachukwu','Abubakar','Lawal']
+      },
+      cities: ['Lagos','Abuja','Kano','Ibadan','Port Harcourt','Benin City','Enugu','Kaduna','Owerri','Uyo','Warri','Calabar','Abeokuta','Ilorin','Jos'],
+      states: ['Lagos','FCT Abuja','Kano','Oyo','Rivers','Edo','Enugu','Kaduna','Imo','Akwa Ibom','Delta','Cross River'],
+      banks: ['GTBank','Zenith Bank','Access Bank','First Bank','UBA','Kuda Bank','OPay','PalmPay','Moniepoint','Wema Bank','Sterling Bank'],
+      momo: ['OPay','PalmPay','Kuda','Moniepoint'],
+      phones: ['Tecno Spark 20','Infinix Hot 40','Samsung Galaxy A15','Itel A70','Tecno Camon 30','Xiaomi Redmi 12','Samsung Galaxy A05','Infinix Note 30','Tecno Phantom V Flip']
+    }
+  };
+
+  const OCCUPATIONS = {
+    general:       ['Civil Servant','Primary School Teacher','Nurse','Commercial Driver','Shop Assistant','Security Officer','Hairdresser','Electrician','Plumber','Church Administrator'],
+    smallbiz:      ['Shop Owner','Tailor','Mechanic','Caterer / Food Seller','Spare Parts Dealer','Fashion Designer','Printing & Branding Shop','Event Decorator','Hair Salon Owner','Provisionals Store Owner'],
+    students:      ['University Student','Polytechnic Student','Vocational Student','Secondary School Leaver','National Service Person','Part-time Student'],
+    professionals: ['Software Developer','Bank Officer','Marketing Manager','Accountant','Civil Engineer','Pharmacist','Journalist','HR Manager','Project Manager','Architect'],
+    traders:       ['Market Trader','Street Food Vendor','Provisions Store Operator','Wholesale Distributor','Mobile Money Agent','Container Park Operator','Second-hand Clothing Seller'],
+    farmers:       ['Smallholder Farmer','Poultry Farmer','Cassava & Yam Farmer','Fish Farmer','Crop Aggregator','Agricultural Extension Worker']
+  };
+
+  const AGES = {
+    general: [25, 55], smallbiz: [22, 50], students: [18, 26],
+    professionals: [24, 45], traders: [28, 55], farmers: [30, 60]
+  };
+
+  // ─── CONTENT POOLS ────────────────────────────────────────
+  const BIOS = {
+    fintech: [
+      (n,city,occ) => `${n} is a ${occ} based in ${city} who handles most transactions in cash or through mobile money. Banks feel distant and complicated — the queues are long, the fees are unclear, and the apps rarely work reliably on a budget Android. ${n} wants a simpler way to manage money day to day, send and receive payments, and put something aside for the future.`,
+      (n,city,occ) => `${n} runs a ${occ.toLowerCase()} in ${city} and has built a small but steady income over the years. Business is mostly cash-based — customers don't trust card terminals and mobile money transfers sometimes fail at the worst moments. ${n} is curious about digital finance but hasn't found a product that speaks to the way they actually live and work.`,
+      (n,city,occ) => `${n} has been a ${occ.toLowerCase()} in ${city} for several years. Money moves constantly — school fees, rent, family support — but none of it is tracked or planned. ${n} knows saving is important but finds traditional bank accounts inaccessible and unintuitive. A tool that works the way mobile money does, but helps save and invest, could change things.`
+    ],
+    healthtech: [
+      (n,city,occ) => `${n} is a ${occ.toLowerCase()} living in ${city}. Healthcare is an afterthought — you visit the clinic when something is already wrong, not before. ${n} has limited reliable health information and mostly relies on advice from family or social media. The idea of tracking health, booking appointments digitally, or getting medical guidance online feels unfamiliar but appealing.`,
+      (n,city,occ) => `${n} works as a ${occ.toLowerCase()} in ${city} and has dependants — young children or aging parents — whose health they worry about. Getting to a clinic takes half a day and costs money before treatment even begins. ${n} wants a faster, cheaper way to understand symptoms, access professional advice, and manage prescriptions without the full hospital visit.`,
+      (n,city,occ) => `${n} is a ${occ.toLowerCase()} in ${city} who exercises occasionally but has no structured health habits. Access to qualified healthcare is expensive and the nearest hospital is not nearby. ${n} is open to a health app but only if it's simple enough that they'd actually open it every day and not forget it exists.`
+    ],
+    ecommerce: [
+      (n,city,occ) => `${n} is a ${occ.toLowerCase()} in ${city} who still prefers the market to online shopping — you can see what you're getting, negotiate, and take it home immediately. Online shopping feels risky: wrong sizes, delayed delivery, and the fear of paying and receiving nothing. ${n} would buy online if the experience felt trustworthy and the delivery was actually reliable.`,
+      (n,city,occ) => `${n} works as a ${occ.toLowerCase()} in ${city}. Time is the biggest constraint. Running errands across town to buy basics takes hours they don't have. ${n} has heard about online shopping but their first attempt — on a cluttered, confusing interface — put them off. A cleaner experience and cash-on-delivery option would bring them back.`,
+      (n,city,occ) => `${n} is a ${occ.toLowerCase()} in ${city} who buys most things from local traders they know personally. The personal relationship matters — credit, returns, and trust are built over time. Online platforms feel anonymous and impersonal, but ${n} is open to anything that saves a trip and delivers reliably to their neighbourhood.`
+    ],
+    logistics: [
+      (n,city,occ) => `${n} is a ${occ.toLowerCase()} in ${city} who regularly sends and receives packages — goods for their business, personal items, family parcels. The current process is fragmented: call the driver, negotiate a price, wait, and hope it arrives. There's no tracking, no receipts, and when things go wrong there's no one to hold accountable.`,
+      (n,city,occ) => `${n} runs a ${occ.toLowerCase()} in ${city} that depends on goods moving reliably. Suppliers are across town or in another city. Delays cost money and cancel orders. ${n} needs a logistics solution that is affordable, transparent, and actually predictable — not just "I'll call you when I reach."`,
+      (n,city,occ) => `${n} is a ${occ.toLowerCase()} in ${city}. Sending a package means trusting someone informally — a bus driver, a neighbour going that way, or an expensive courier. ${n} wants something closer to what they've seen in international delivery: schedule it, track it, confirm it arrived.`
+    ],
+    education: [
+      (n,city,occ) => `${n} is a ${occ.toLowerCase()} in ${city} who is always learning — YouTube tutorials, social media groups, WhatsApp study chats. Formal education was expensive and the system didn't feel built for someone like them. ${n} wants to gain skills that lead directly to better work or income, not certificates for their own sake.`,
+      (n,city,occ) => `${n} works as a ${occ.toLowerCase()} in ${city} and is painfully aware of the skills gap between where they are and where they want to be. Internet access is a constraint — data is expensive and network can be inconsistent. ${n} wants learning that works offline, moves at their pace, and connects clearly to real job opportunities.`,
+      (n,city,occ) => `${n} is a ${occ.toLowerCase()} in ${city}. Education shaped their life but the system had gaps — access to current resources, mentorship, and networks were limited. ${n} would pay for the right learning product if it delivered a clear outcome: a new skill, a better job, a certification that actually means something.`
+    ],
+    agritech: [
+      (n,city,occ) => `${n} is a ${occ.toLowerCase()} in ${city} who has been farming the same land for years. Yields are unpredictable — rain, pests, market prices — and there's little reliable data to plan with. ${n} hears about modern farming techniques but accessing extension services is difficult, and most agricultural advice doesn't account for their specific crop, region, or resources.`,
+      (n,city,occ) => `${n} farms near ${city} and sells produce at the local market. The challenge isn't growing — it's selling at the right price and time. By the time ${n} gets to market, prices may have dropped or buyers have already gone. Access to market price data and direct buyer connections would transform the economics of their farm.`,
+      (n,city,occ) => `${n} is a ${occ.toLowerCase()} who relies entirely on seasonal income. When harvests are good, things are fine; when they're not, the family suffers. ${n} needs better access to crop insurance, input financing, and guaranteed offtake — but the formal agricultural system is hard to navigate without connections or collateral.`
+    ],
+    other: [
+      (n,city,occ) => `${n} is a ${occ.toLowerCase()} living in ${city}. Like most people, their day is shaped by practical constraints — time, cost, connectivity — and they're open to any product that genuinely makes life easier without adding new complexity. Trust is earned slowly; a bad first experience means they won't return.`,
+      (n,city,occ) => `${n} is a ${occ.toLowerCase()} based in ${city}. They are pragmatic and resourceful — finding ways to get things done even when formal systems fail. ${n} values simplicity, speed, and reliability above features they'll never use. Word of mouth from trusted friends matters far more than any advertising.`,
+      (n,city,occ) => `${n} works as a ${occ.toLowerCase()} in ${city}. Screens are part of daily life — social media, WhatsApp, YouTube — but apps for specific tasks often disappoint. ${n} has tried several tools in this space and abandoned most of them. The right product would have to work first time, every time, on their Tecno or Infinix device.`
+    ]
+  };
+
+  const GOALS = {
+    fintech: ['Send money home quickly and cheaply','Save consistently without thinking about it','Understand where money is going each month','Get a small loan without a guarantor','Keep business and personal money separate','Build an emergency fund'],
+    healthtech: ['Get medical advice without going to a clinic','Track health for family members in one place','Book appointments without phone calls','Access prescription history easily','Understand symptoms before they get serious','Find a doctor who speaks their language'],
+    ecommerce: ['Order groceries and household items from home','Find authentic local products online','Return items without a fight','Pay on delivery and not upfront','Get accurate product sizes and descriptions','Track delivery in real time'],
+    logistics: ['Know exactly where a package is at all times','Send parcels at a predictable, fair price','Get receipts and proof of delivery','Schedule pick-ups in advance','Handle returns and damaged goods easily','Reliable last-mile delivery to their area'],
+    education: ['Learn a marketable skill in weeks, not years','Access courses on a low data budget','Get a certificate employers actually recognise','Learn while working a full-time job','Find mentors in their field','Apply knowledge immediately, not years later'],
+    agritech: ['Get real-time market prices before selling','Access credit for seeds and inputs upfront','Connect directly with bulk buyers','Receive weather alerts before planting','Learn better farming practices for their crop','Track farm expenses and income'],
+    other: ['Solve a specific daily problem faster','Spend less time on admin and logistics','Connect with people in their field','Access services that were previously out of reach','Build something that generates income','Learn new skills relevant to their work']
+  };
+
+  const FRUSTRATIONS = {
+    fintech: ['Bank apps crash when data is slow','Hidden fees they find out about too late','Branches are far and queues are long','Transfer limits are too restrictive','Customer support never answers','KYC requirements they can\'t easily meet'],
+    healthtech: ['Clinics are overcrowded and far away','Health information online is unreliable','Can\'t afford specialist consultations','No continuity — different doctor every visit','Hard to get medical records when needed','No reminders for medication or follow-ups'],
+    ecommerce: ['Ordered items arrive wrong or damaged','Long delivery times with no updates','No easy return process','Payment methods don\'t include mobile money','Can\'t verify seller trustworthiness','Items look different from photos'],
+    logistics: ['No way to track packages in real time','Drivers don\'t pick up or show up late','Prices vary wildly for the same route','No accountability when items are lost','Cash-only payments are inconvenient','Can\'t schedule pick-ups in advance'],
+    education: ['Courses require stable internet they don\'t have','Content feels generic, not locally relevant','Certificates aren\'t recognised by employers','Too expensive for the value delivered','Hard to stay motivated without community','Learning takes too long before any outcome'],
+    agritech: ['No reliable source for market price data','Input financing has too much paperwork','Extension services don\'t reach their area','Weather forecasts aren\'t farm-specific','Post-harvest losses from poor storage','Middlemen take too much of the profit'],
+    other: ['Current solutions are too complicated','Products built for other markets don\'t fit here','Poor customer support when things go wrong','Data costs too much to use apps regularly','Can\'t trust new services with payment details','Too many steps to do something simple']
+  };
+
+  const BEHAVIOUR_ROWS = {
+    ghana: {
+      device:     ['Tecno Spark 10 Pro (Android)','Infinix Hot 30 (Android)','Samsung Galaxy A14','Itel A70 (Android)','Tecno Camon 20 Pro'],
+      data:       ['Buys MTN 1GB daily bundle','Shares data plan with family','Uses WiFi at work; data at home','Buys weekly 2GB bundle when cash allows','Primarily on 4G in city; 3G elsewhere'],
+      payment:    ['Primarily MTN MoMo; has Ecobank account rarely used','GCB account + Telecel Cash for daily top-ups','Uses AirtelTigo Money; pays bills via USSD','Prefers cash; mobile money only for remittances','MTN MoMo daily; opened bank account last year'],
+      connect:    ['Strong 4G in Accra; drops in Volta Region on family trips','Stable 4G in Kumasi; patchy in outskirts','4G most of the time; 2G at family village','Good urban coverage; expects apps to load in under 3s','4G at work; mixed signal at home'],
+      social:     ['WhatsApp and TikTok daily','Facebook and WhatsApp groups','Instagram, TikTok, and YouTube','LinkedIn and Twitter (X) professionally','WhatsApp only; avoids most social media']
+    },
+    nigeria: {
+      device:     ['Tecno Spark 20 (Android)','Infinix Hot 40 (Android)','Samsung Galaxy A15','Xiaomi Redmi 12','Tecno Camon 30'],
+      data:       ['Buys Airtel 1.5GB daily plan','Uses MTN data; tops up every 2–3 days','Glo monthly plan; supplements with daily bundles','Uses WiFi at work; tops up mobile data at home','Buys weekly 3GB bundle; WhatsApp is largest data use'],
+      payment:    ['OPay for daily transfers; GTBank for salary','PalmPay for small payments; First Bank for bills','Moniepoint POS for business; Zenith Bank account','Kuda Bank primary; OPay for quick transfers','Cash-first; OPay only when forced to go digital'],
+      connect:    ['Strong 4G in Lagos Island; drops in Surulere','Stable 4G in Abuja; patchy during rain','Mixed signal in Ibadan; expects apps to work offline','4G most of the time in Port Harcourt','Reliable 4G; sensitive to app load times'],
+      social:     ['WhatsApp and Instagram daily','TikTok and WhatsApp groups','Twitter (X), Instagram, and LinkedIn','LinkedIn, Twitter, and WhatsApp professionally','WhatsApp and Facebook groups only']
+    }
+  };
+
+  const QUOTES = {
+    fintech: [
+      'If the app crashes once, I delete it. I don\'t have time for that.',
+      'I just want to send money without all this stress. Why is it so hard?',
+      'I don\'t trust putting my money somewhere I can\'t walk in to.',
+      'My bank charges me for things I didn\'t ask for. That\'s not right.',
+      'If it doesn\'t work on my network, it doesn\'t work for me.',
+      'Save automatically? Yes. I\'ll always find a reason to spend if I see the money.'
+    ],
+    healthtech: [
+      'By the time I get to the hospital, I\'ve already spent the whole day.',
+      'I just want to know if it\'s serious or not before I waste money going in.',
+      'My mother\'s medications change every visit. Nobody keeps track.',
+      'I\'d pay for a doctor I could message. The queue alone is the problem.',
+      'Health is only an emergency here. There\'s no culture of prevention.',
+      'If I could just describe my symptoms and get a real answer, that would be enough.'
+    ],
+    ecommerce: [
+      'I\'ll order online when I trust that what I see is what arrives.',
+      'The market is right there. Why would I wait three days?',
+      'Cash on delivery. That\'s the only way I\'ll try it again.',
+      'Once I got a completely different item. Now I\'m scared to order anything.',
+      'If the delivery person knows my neighbourhood, I\'ll use it every week.',
+      'I spend so much time going to buy small things. If I could order, I would.'
+    ],
+    logistics: [
+      'Just tell me where my package is. That\'s all I need.',
+      'I\'ve lost goods that way before. Nobody took responsibility.',
+      'The driver said "I\'m almost there" for four hours.',
+      'Sending a package shouldn\'t feel like a prayer.',
+      'I\'ll pay more for certainty. Cheap and unreliable costs me more in the end.',
+      'Tracking is the basic thing. I just need to know it\'s moving.'
+    ],
+    education: [
+      'I want to learn, but I need to know it will actually get me somewhere.',
+      'The courses I tried were made for someone else. Not for how I live.',
+      'Data is expensive. An offline mode would change everything.',
+      'Give me three skills that pay. Not a hundred things I\'ll forget.',
+      'I\'m always learning — YouTube, WhatsApp groups, everything. I just need it structured.',
+      'Show me someone like me who did it. That\'s more convincing than any feature list.'
+    ],
+    agritech: [
+      'By the time I get to market, the price has already dropped.',
+      'I know my soil. I need someone to know it too.',
+      'Input costs keep going up. I need credit that works before planting, not after.',
+      'If I could sell direct, I\'d earn twice as much for the same work.',
+      'Weather apps give me Accra forecast. My farm isn\'t in Accra.',
+      'I\'ve been farming twenty years. I don\'t need advice. I need access.'
+    ],
+    other: [
+      'Build something that works on slow internet and I\'ll use it every day.',
+      'Too many steps. I gave up before I even got to the main thing.',
+      'My friend told me about it. That\'s why I\'m here. That\'s how trust works.',
+      'I don\'t read instructions. If it\'s not obvious the first time, I\'m gone.',
+      'I just want it to do what it says it does. Nothing more.',
+      'Make it work for my Tecno first. Then worry about the rest.'
+    ]
+  };
+
+  // ─── UTILITIES ────────────────────────────────────────────
+  function pick(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
+  function pickN(arr, n) {
+    const s = [...arr];
+    const r = [];
+    while (r.length < n && s.length > 0) {
+      const i = Math.floor(Math.random() * s.length);
+      r.push(s.splice(i, 1)[0]);
+    }
+    return r;
+  }
+  function randInt(min, max) { return Math.floor(Math.random() * (max - min + 1)) + min; }
+
+  // ─── STATE ────────────────────────────────────────────────
+  let activeMarket = 'ghana';
+  let currentPersona = null;
+
+  // ─── GENERATE ─────────────────────────────────────────────
+  function buildPersona() {
+    const productType = document.getElementById('pc-product-type').value;
+    const audience    = document.getElementById('pc-audience').value;
+    const problem     = document.getElementById('pc-problem').value.trim();
+
+    const market = activeMarket === 'both'
+      ? (Math.random() > 0.5 ? 'ghana' : 'nigeria')
+      : activeMarket;
+
+    const db     = DB[market];
+    const gender = Math.random() > 0.5 ? 'male' : 'female';
+    const nameDb = db[gender];
+    const first  = pick(nameDb.first);
+    const last   = pick(nameDb.last);
+    const name   = `${first} ${last}`;
+
+    const city   = pick(db.cities);
+    const ageRange = AGES[audience] || [22, 50];
+    const age    = randInt(ageRange[0], ageRange[1]);
+    const occ    = pick(OCCUPATIONS[audience] || OCCUPATIONS.general);
+
+    const avatarNum = randInt(1, 23);
+    const avatar = `./avatar/${gender}/${gender}${avatarNum}.png`;
+
+    const bioTemplates = BIOS[productType] || BIOS.other;
+    const bio = pick(bioTemplates)(name, city, occ);
+
+    const goalPool = GOALS[productType] || GOALS.other;
+    const frustPool = FRUSTRATIONS[productType] || FRUSTRATIONS.other;
+    const goals = pickN(goalPool, 3);
+    const frustrations = pickN(frustPool, 3);
+
+    const bRows = BEHAVIOUR_ROWS[market];
+    const behaviour = [
+      { label: 'Device',      value: pick(bRows.device) },
+      { label: 'Data',        value: pick(bRows.data) },
+      { label: 'Payment',     value: pick(bRows.payment) },
+      { label: 'Connectivity', value: pick(bRows.connect) },
+      { label: 'Social',      value: pick(bRows.social) }
+    ];
+
+    const quotePool = QUOTES[productType] || QUOTES.other;
+    const quote = pick(quotePool);
+
+    return { name, gender, age, city, occupation: occ, avatar, bio, goals, frustrations, behaviour, quote, market, productType, audience, problem };
+  }
+
+  function renderPersona(p) {
+    document.getElementById('pc-avatar-img').src = p.avatar;
+    document.getElementById('pc-avatar-img').alt = p.name;
+    document.getElementById('pc-name').textContent = p.name;
+    document.getElementById('pc-age-tag').textContent = `${p.age} yrs`;
+    document.getElementById('pc-occ-tag').textContent = p.occupation;
+    document.getElementById('pc-city-tag').textContent = p.city;
+    document.getElementById('pc-market-tag').textContent = p.market === 'ghana' ? '🇬🇭 Ghana' : '🇳🇬 Nigeria';
+
+    document.getElementById('pc-bio').textContent = p.bio;
+
+    const goalsList = document.getElementById('pc-goals');
+    goalsList.innerHTML = p.goals.map(g => `
+      <li class="pc-gf-item">
+        <span class="pc-gf-dot goal"></span>${g}
+      </li>`).join('');
+
+    const frustList = document.getElementById('pc-frustrations');
+    frustList.innerHTML = p.frustrations.map(f => `
+      <li class="pc-gf-item">
+        <span class="pc-gf-dot frustration"></span>${f}
+      </li>`).join('');
+
+    const behGrid = document.getElementById('pc-behaviour');
+    behGrid.innerHTML = p.behaviour.map(r => `
+      <div class="pc-behaviour-row">
+        <span class="pc-brow-label">${r.label}</span>
+        <span class="pc-brow-value">${r.value}</span>
+      </div>`).join('');
+
+    document.getElementById('pc-quote').textContent = `"${p.quote}"`;
+
+    document.getElementById('pc-empty').style.display = 'none';
+    const card = document.getElementById('pc-card');
+    card.classList.add('visible');
+    card.style.display = 'block';
+  }
+
+  function generate() {
+    const btn = document.getElementById('pc-generate-btn');
+    btn.disabled = true;
+    btn.classList.add('loading');
+    btn.innerHTML = '<div class="pc-spin"></div> Generating…';
+
+    setTimeout(() => {
+      currentPersona = buildPersona();
+      renderPersona(currentPersona);
+      btn.disabled = false;
+      btn.classList.remove('loading');
+      btn.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.912 5.813a2 2 0 0 0 1.275 1.275L21 12l-5.813 1.912a2 2 0 0 0-1.275 1.275L12 21l-1.912-5.813a2 2 0 0 0-1.275-1.275L3 12l5.813-1.912a2 2 0 0 0 1.275-1.275L12 3z"/></svg> Generate Persona`;
+    }, 400);
+  }
+
+  function regenSection(section) {
+    if (!currentPersona) return;
+    const btn = document.querySelector(`[data-section="${section}"]`);
+    if (btn) { btn.classList.add('spinning'); }
+
+    setTimeout(() => {
+      const p = currentPersona;
+      const productType = p.productType;
+      const market = p.market;
+
+      if (section === 'bio') {
+        const templates = BIOS[productType] || BIOS.other;
+        p.bio = pick(templates)(p.name, p.city, p.occupation);
+        document.getElementById('pc-bio').textContent = p.bio;
+      }
+      if (section === 'gf') {
+        const goalPool = GOALS[productType] || GOALS.other;
+        const frustPool = FRUSTRATIONS[productType] || FRUSTRATIONS.other;
+        p.goals = pickN(goalPool, 3);
+        p.frustrations = pickN(frustPool, 3);
+        document.getElementById('pc-goals').innerHTML = p.goals.map(g => `<li class="pc-gf-item"><span class="pc-gf-dot goal"></span>${g}</li>`).join('');
+        document.getElementById('pc-frustrations').innerHTML = p.frustrations.map(f => `<li class="pc-gf-item"><span class="pc-gf-dot frustration"></span>${f}</li>`).join('');
+      }
+      if (section === 'behaviour') {
+        const bRows = BEHAVIOUR_ROWS[market];
+        p.behaviour = [
+          { label: 'Device',       value: pick(bRows.device) },
+          { label: 'Data',         value: pick(bRows.data) },
+          { label: 'Payment',      value: pick(bRows.payment) },
+          { label: 'Connectivity', value: pick(bRows.connect) },
+          { label: 'Social',       value: pick(bRows.social) }
+        ];
+        document.getElementById('pc-behaviour').innerHTML = p.behaviour.map(r =>
+          `<div class="pc-behaviour-row"><span class="pc-brow-label">${r.label}</span><span class="pc-brow-value">${r.value}</span></div>`).join('');
+      }
+      if (section === 'quote') {
+        const quotePool = QUOTES[productType] || QUOTES.other;
+        p.quote = pick(quotePool);
+        document.getElementById('pc-quote').textContent = `"${p.quote}"`;
+      }
+
+      if (btn) { btn.classList.remove('spinning'); }
+    }, 280);
+  }
+
+  // ─── COPY / EXPORT ────────────────────────────────────────
+  function toastMsg(msg, type = 'success') {
+    const t = document.getElementById('pc-toast');
+    t.textContent = msg;
+    t.className = `pc-toast${type === 'error' ? ' error' : ''}`;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 2800);
+  }
+
+  function copyJSON() {
+    if (!currentPersona) return;
+    const p = currentPersona;
+    const data = {
+      name: p.name, age: p.age, gender: p.gender,
+      location: p.city, market: p.market,
+      occupation: p.occupation,
+      bio: p.bio,
+      goals: p.goals,
+      frustrations: p.frustrations,
+      behaviour: Object.fromEntries(p.behaviour.map(r => [r.label.toLowerCase(), r.value])),
+      quote: p.quote
+    };
+    navigator.clipboard.writeText(JSON.stringify(data, null, 2))
+      .then(() => toastMsg('Copied as JSON'))
+      .catch(() => toastMsg('Copy failed', 'error'));
+  }
+
+  function copyText() {
+    if (!currentPersona) return;
+    const p = currentPersona;
+    const lines = [
+      `PERSONA: ${p.name}`,
+      `Age: ${p.age}  |  ${p.occupation}  |  ${p.city}, ${p.market === 'ghana' ? 'Ghana' : 'Nigeria'}`,
+      ``,
+      `BIO`,
+      p.bio,
+      ``,
+      `GOALS`,
+      ...p.goals.map(g => `• ${g}`),
+      ``,
+      `FRUSTRATIONS`,
+      ...p.frustrations.map(f => `• ${f}`),
+      ``,
+      `BEHAVIOUR & TECH`,
+      ...p.behaviour.map(r => `${r.label}: ${r.value}`),
+      ``,
+      `IN THEIR OWN WORDS`,
+      `"${p.quote}"`
+    ];
+    navigator.clipboard.writeText(lines.join('\n'))
+      .then(() => toastMsg('Copied as plain text'))
+      .catch(() => toastMsg('Copy failed', 'error'));
+  }
+
+  // ─── PDF ──────────────────────────────────────────────────
+  async function imgToDataURL(src) {
+    try {
+      const res = await fetch(src);
+      const blob = await res.blob();
+      return await new Promise(resolve => {
+        const r = new FileReader();
+        r.onloadend = () => resolve(r.result);
+        r.readAsDataURL(blob);
+      });
+    } catch { return ''; }
+  }
+
+  function buildPersonaPdfHtml(p, photoDataUrl, logoDataUrl) {
+    const marketLabel = p.market === 'ghana' ? '🇬🇭 Ghana' : '🇳🇬 Nigeria';
+    const goalRows  = p.goals.map(g => `<li>${g}</li>`).join('');
+    const frustRows = p.frustrations.map(f => `<li>${f}</li>`).join('');
+    const behavRows = p.behaviour.map(r =>
+      `<tr><td class="label">${r.label}</td><td class="value">${r.value}</td></tr>`).join('');
+    const photoTag = photoDataUrl
+      ? `<img src="${photoDataUrl}" style="width:100%;height:100%;object-fit:cover;display:block;" alt="">`
+      : '';
+    const logoTag = logoDataUrl
+      ? `<img class="logo-img" src="${logoDataUrl}" alt="Contentify">`
+      : `<div style="width:32px;height:32px;border-radius:6px;background:#333;flex-shrink:0;"></div>`;
+    return `<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>${p.name} — Contentify Persona</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600;700&family=Geist:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Geist', sans-serif; font-size: 13px; color: #0a0a0a; background: #d4d4d4; min-height: 100vh; display: flex; align-items: flex-start; justify-content: center; padding: 48px 24px; }
+    .page { background: #fff; width: 794px; min-height: 1123px; box-shadow: 0 4px 40px rgba(0,0,0,0.18); overflow: hidden; }
+    .header { background: #0a0a0a; display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 20px 48px; print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+    .header-left { display: flex; align-items: center; gap: 14px; }
+    .logo-img { width: 32px; height: 32px; border-radius: 6px; object-fit: cover; flex-shrink: 0; }
+    .header-title { font-family: 'Geist Mono', monospace; font-size: 13px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: #fff; }
+    .header-url { font-family: 'Geist', sans-serif; font-size: 11px; font-weight: 500; padding: 7px 14px; border-radius: 100px; background: #fff; color: #0a0a0a; }
+    .content { padding: 40px 48px 48px; display: flex; flex-direction: column; min-height: calc(1123px - 76px); }
+    .profile { display: flex; gap: 24px; margin-bottom: 32px; padding-bottom: 28px; border-bottom: 1px solid #e5e5e5; }
+    .avatar { width: 96px; height: 96px; background: #f0f0f0; border-radius: 10px; flex-shrink: 0; overflow: hidden; print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+    .profile-info { display: flex; flex-direction: column; gap: 5px; justify-content: center; }
+    .profile-name { font-size: 22px; font-weight: 600; letter-spacing: -0.03em; color: #0a0a0a; margin-bottom: 6px; }
+    .profile-row { display: flex; gap: 8px; align-items: baseline; }
+    .profile-lbl { color: #737373; font-size: 12px; flex-shrink: 0; min-width: 80px; }
+    .profile-val { font-weight: 500; font-size: 13px; color: #0a0a0a; }
+    .section { margin-bottom: 24px; }
+    .section-title { font-size: 10px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #a3a3a3; margin-bottom: 10px; }
+    .bio-text { font-size: 13px; color: #404040; line-height: 1.75; }
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+    .col-title { font-size: 11px; font-weight: 600; color: #737373; margin-bottom: 8px; display: flex; align-items: center; gap: 5px; }
+    .col-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+    .col-dot.goal { background: #22c55e; }
+    .col-dot.frustration { background: #ef4444; }
+    ul.gf-list { list-style: none; display: flex; flex-direction: column; gap: 7px; }
+    ul.gf-list li { font-size: 12px; color: #404040; line-height: 1.55; padding-left: 12px; position: relative; }
+    ul.gf-list li::before { content: ''; position: absolute; left: 0; top: 6px; width: 4px; height: 4px; border-radius: 50%; background: #d4d4d4; }
+    table { width: 100%; border-collapse: collapse; }
+    td { padding: 6px 0; font-size: 12px; vertical-align: top; border-bottom: 1px solid #f5f5f5; }
+    td.label { color: #737373; width: 120px; }
+    td.value { font-weight: 500; color: #0a0a0a; }
+    .quote { font-size: 14px; font-style: italic; color: #737373; line-height: 1.7; padding-left: 14px; border-left: 2px solid #e5e5e5; }
+    .footer { margin-top: auto; padding-top: 16px; border-top: 1px solid #e5e5e5; font-size: 10px; color: #a3a3a3; font-family: 'Geist Mono', monospace; letter-spacing: 0.04em; text-align: center; }
+    @media print { body { background: #fff; padding: 0; } .page { box-shadow: none; width: 100%; min-height: 0; } @page { margin: 0; size: A4; } }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div class="header">
+      <div class="header-left">
+        ${logoTag}
+        <span class="header-title">Contentify Persona Creator</span>
+      </div>
+      <span class="header-url">contentify.dev/persona</span>
+    </div>
+    <div class="content">
+      <div class="profile">
+        <div class="avatar">${photoTag}</div>
+        <div class="profile-info">
+          <div class="profile-name">${p.name}</div>
+          <div class="profile-row"><span class="profile-lbl">Age:</span><span class="profile-val">${p.age}</span></div>
+          <div class="profile-row"><span class="profile-lbl">Occupation:</span><span class="profile-val">${p.occupation}</span></div>
+          <div class="profile-row"><span class="profile-lbl">Location:</span><span class="profile-val">${p.city}</span></div>
+          <div class="profile-row"><span class="profile-lbl">Market:</span><span class="profile-val">${marketLabel}</span></div>
+        </div>
+      </div>
+      <div class="section">
+        <div class="section-title">Bio</div>
+        <p class="bio-text">${p.bio}</p>
+      </div>
+      <div class="section">
+        <div class="section-title">Goals &amp; Frustrations</div>
+        <div class="two-col">
+          <div>
+            <div class="col-title"><span class="col-dot goal"></span> Goals</div>
+            <ul class="gf-list">${goalRows}</ul>
+          </div>
+          <div>
+            <div class="col-title"><span class="col-dot frustration"></span> Frustrations</div>
+            <ul class="gf-list">${frustRows}</ul>
+          </div>
+        </div>
+      </div>
+      <div class="section">
+        <div class="section-title">Behaviour &amp; Tech</div>
+        <table>${behavRows}</table>
+      </div>
+      <div class="section">
+        <div class="section-title">In Their Own Words</div>
+        <blockquote class="quote">"${p.quote}"</blockquote>
+      </div>
+      <div class="footer">&#10022; All personas are synthetic &mdash; not real people. Generated by Contentify.</div>
+    </div>
+  </div>
+  <script>
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(function() { setTimeout(function() { window.print(); }, 300); });
+    } else {
+      window.addEventListener('load', function() { setTimeout(function() { window.print(); }, 600); });
+    }
+  <\/script>
+</body>
+</html>`;
+  }
+
+  async function downloadPersonaPdf(button) {
+    if (!currentPersona) return;
+    const win = window.open('', '_blank');
+    if (!win) { toastMsg('Allow popups to download PDF', 'error'); return; }
+    const origHTML = button.innerHTML;
+    button.innerHTML = `<div class="pc-spin" style="border-top-color:#888;border-color:rgba(255,255,255,0.1);"></div> Preparing…`;
+    button.disabled = true;
+    try {
+      const p = currentPersona;
+      const [photoDataUrl, logoDataUrl] = await Promise.all([
+        p.avatar ? imgToDataURL(p.avatar) : Promise.resolve(''),
+        imgToDataURL('./THUMBNAIL.jpg')
+      ]);
+      const html = buildPersonaPdfHtml(p, photoDataUrl, logoDataUrl);
+      const blob = new Blob([html], { type: 'text/html; charset=utf-8' });
+      const url  = URL.createObjectURL(blob);
+      win.location.href = url;
+      toastMsg('PDF ready — save as PDF from the print dialog');
+      button.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:13px;height:13px"><polyline points="20 6 9 17 4 12"/></svg> Done`;
+      setTimeout(() => { button.innerHTML = origHTML; button.disabled = false; }, 2500);
+      setTimeout(() => URL.revokeObjectURL(url), 60000);
+    } catch {
+      win.close();
+      toastMsg('Download failed — please try again', 'error');
+      button.innerHTML = origHTML;
+      button.disabled = false;
+    }
+  }
+
+  // ─── EVENTS ───────────────────────────────────────────────
+  document.getElementById('pc-generate-btn').addEventListener('click', generate);
+  document.getElementById('pc-regen-all-btn').addEventListener('click', generate);
+  document.getElementById('pc-next-btn').addEventListener('click', generate);
+  document.getElementById('pc-copy-json-btn').addEventListener('click', copyJSON);
+  document.getElementById('pc-copy-text-btn').addEventListener('click', copyText);
+  document.getElementById('pc-download-pdf-btn').addEventListener('click', e => downloadPersonaPdf(e.currentTarget));
+
+  // Market toggle
+  document.querySelectorAll('.pc-market-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.pc-market-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      activeMarket = btn.dataset.market;
+    });
+  });
+
+  // Section refresh buttons
+  document.querySelectorAll('.pc-refresh-btn').forEach(btn => {
+    btn.addEventListener('click', () => regenSection(btn.dataset.section));
+  });
+
+  // Mobile nav
+  const hamburger = document.getElementById('nav-hamburger');
+  const drawer    = document.getElementById('nav-drawer');
+  hamburger.addEventListener('click', () => {
+    const open = hamburger.classList.toggle('open');
+    hamburger.setAttribute('aria-expanded', open);
+    drawer.classList.toggle('open', open);
+    drawer.setAttribute('aria-hidden', !open);
+  });
+  drawer.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', () => {
+      hamburger.classList.remove('open');
+      drawer.classList.remove('open');
+    });
+  });
+</script>
+
+</body>
+</html>
