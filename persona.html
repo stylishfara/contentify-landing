@@ -1,8 +1,30 @@
 <!DOCTYPE html>
+<!--
+  ============================================================================
+  WORK IN PROGRESS — NOT DEPLOYED
+  ============================================================================
+  This page is excluded from the live site via .vercelignore, and is linked
+  from neither the nav, the footers, nor sitemap.xml. /persona returns 404.
+
+  Known unfinished work before re-enabling:
+    - The "Core problem your product solves" textarea (search: pc-problem) is
+      read into `problem` in buildPersona() but never rendered, exported, or
+      used to shape the persona. Users type into it and it does nothing.
+      Either wire it up or drop the field.
+    - If you do render it, use textContent (renderPersona uses innerHTML for
+      goals/frustrations/behaviour) and escape it before the PDF template,
+      which builds HTML by string concatenation.
+
+  To re-enable: remove persona.html from .vercelignore, restore the footer
+  links in index.html and below (search "Persona Creator — WIP"), and add the
+  /persona <url> block back to sitemap.xml.
+  ============================================================================
+-->
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
   <title>Persona Creator — Contentify</title>
   <link rel="icon" type="image/jpeg" href="./THUMBNAIL.jpg">
   <link rel="apple-touch-icon" href="./THUMBNAIL.jpg">
@@ -775,7 +797,7 @@
         <ul class="footer-col-links">
           <li><a href="https://www.figma.com/community/plugin/1631081710858656620/contentify" target="_blank" rel="noopener">Figma Plugin</a></li>
           <li><a href="./index.html#person-gen">Person Generator</a></li>
-          <li><a href="./persona.html">Persona Creator</a></li>
+          <!-- Persona Creator — WIP, hidden until ready. See .vercelignore -->
           <li><a href="./index.html#categories">Content Library</a></li>
         </ul>
       </div>

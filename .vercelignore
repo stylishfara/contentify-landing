@@ -1,0 +1,28 @@
+# Files kept in the repo but NOT deployed to contentify.dev.
+#
+# Persona Creator is a work in progress. Keeping it listed here means the source
+# stays in version control and in your editor, but is never uploaded to Vercel —
+# so /persona 404s and nobody can read the unfinished code via view-source.
+#
+# To re-enable it later:
+#   1. Delete the persona.html line below.
+#   2. In index.html, in the footer "Product" list, add this back between the
+#      Person Generator and Content Library items:
+#        <li><a href="./persona.html">Persona Creator</a></li>
+#   3. Same in persona.html's own footer (search "Persona Creator — WIP").
+#   4. Add the /persona <url> block back to sitemap.xml.
+#   5. Remove the noindex meta and the WIP banner at the top of persona.html.
+persona.html
+
+# Source art kept in the repo but not needed on the live site.
+# hero-ui.png (the optimised 1000w export) is what the hero actually loads.
+hero-ui-original.png
+
+# Local working files — these are untracked, so they only matter if you ever
+# deploy with the `vercel` CLI from this folder instead of via Git.
+inspo/
+Contentify/
+ui.html
+*.xlsx
+*.csv
+.DS_Store

@@ -12,7 +12,8 @@
     gtag('js', new Date());
     gtag('config', 'G-72PYBD2K0N');
   </script>
-  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <!-- Self-hosted: @emailjs/browser@4.4.1 (pinned, no third-party CDN at runtime) -->
+  <script src="./vendor/emailjs-browser-4.4.1.min.js"></script>
   <script>emailjs.init('70PieoVpuzpq4-aEV');</script>
   <link rel="icon" type="image/jpeg" href="./THUMBNAIL.jpg">
   <link rel="apple-touch-icon" href="./THUMBNAIL.jpg">
@@ -167,9 +168,16 @@
     .hero-visual {
       display: flex; justify-content: flex-end;
     }
-    .hero-visual img {
-      width: min(100%, 480px); height: auto; display: block;
-      border-radius: 24px;
+    /* The grey frame used to be baked into hero.gif. It's CSS now, so the
+       plugin screenshot can be swapped without re-exporting a background. */
+    .hero-frame {
+      width: min(100%, 480px); aspect-ratio: 1 / 1;
+      background: #f5f5f5; border-radius: 24px;
+      display: flex; align-items: center; justify-content: center;
+      overflow: hidden;
+    }
+    .hero-frame img {
+      height: 86%; width: auto; display: block;
     }
     /* ─── SECTION SHARED ─────────────────────────────── */
     .section-eyebrow {
@@ -716,7 +724,7 @@
       .hero { text-align: center; }
       .hero-title, .hero-sub { margin-left: auto; margin-right: auto; }
       .hero-ctas, .hero-visual { justify-content: center; }
-      .hero-visual img { width: min(100%, 520px); }
+      .hero-frame { width: min(100%, 520px); }
       .hero-visual.reveal { opacity: 1; transform: none; }
 
       /* Features — stack on tablet: hide right panel, show rows full-width */
@@ -994,7 +1002,7 @@
         <div class="hero-badge reveal">
           <span class="tag">
             <svg width="10" height="14" viewBox="0 0 10 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5 7C5 5.9 5.9 5 7 5C8.1 5 9 5.9 9 7C9 8.1 8.1 9 7 9C5.9 9 5 8.1 5 7Z" fill="#1ABCFE"/><path d="M1 11C1 9.9 1.9 9 3 9H5V11C5 12.1 4.1 13 3 13C1.9 13 1 12.1 1 11Z" fill="#0ACF83"/><path d="M5 1V5H7C8.1 5 9 4.1 9 3C9 1.9 8.1 1 7 1H5Z" fill="#FF7262"/><path d="M1 3C1 4.1 1.9 5 3 5H5V1H3C1.9 1 1 1.9 1 3Z" fill="#F24E1E"/><path d="M1 7C1 8.1 1.9 9 3 9H5V5H3C1.9 5 1 5.9 1 7Z" fill="#A259FF"/></svg>
-            300+ users on Figma Community
+            600+ users on Figma Community
           </span>
         </div>
 
@@ -1018,7 +1026,9 @@
       </div>
 
       <div class="hero-visual reveal" style="transition-delay:180ms">
-        <img src="./Video/hero.gif" alt="Contentify Figma plugin interface showing authentic West African data" width="480" height="480" loading="eager">
+        <div class="hero-frame">
+          <img src="./hero-ui.png" alt="Contentify Figma plugin interface showing authentic West African data" width="1000" height="1647" loading="eager" decoding="async">
+        </div>
       </div>
     </div>
   </div>
@@ -1510,7 +1520,6 @@
         <ul class="footer-col-links">
           <li><a href="https://www.figma.com/community/plugin/1631081710858656620/contentify" target="_blank" rel="noopener">Figma Plugin</a></li>
           <li><a href="#person-gen">Person Generator</a></li>
-          <li><a href="./persona.html">Persona Creator</a></li>
           <li><a href="#categories">Content Library</a></li>
         </ul>
       </div>
@@ -1537,7 +1546,8 @@
   </div>
 </footer>
 
-<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<!-- Self-hosted: lucide@1.31.0 (pinned, no third-party CDN at runtime) -->
+<script src="./vendor/lucide-1.31.0.min.js"></script>
 <script>
   // Nav scroll border
   const nav = document.getElementById('nav');
@@ -1833,7 +1843,11 @@
     const tpl = document.getElementById('pdf-tpl').textContent;
     const fmt = l => l.replace(/([A-Z])/g, ' $1').replace(/^./, c => c.toUpperCase());
     const row = (l, v) => '<tr><td class="label">' + fmt(l) + '</td><td class="value">' + v + '</td></tr>';
-    const base = window.location.href.replace(/[^/]*$/, '');
+    // Build from origin+pathname (never search/hash) and escape quotes so nothing
+    // from the URL can break out of the <base href="..."> attribute.
+    const base = (window.location.origin + window.location.pathname)
+      .replace(/[^/]*$/, '')
+      .replace(/["'<>]/g, encodeURIComponent);
     return tpl
       .replace('{{BASE}}', base)
       .replace('{{PHOTO_TAG}}', data.photo ? '<img src="' + data.photo + '" style="width:100%;height:100%;object-fit:cover;display:block;" alt="">' : '')
